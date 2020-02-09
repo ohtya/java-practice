@@ -26,8 +26,10 @@ class EtcDiscountServiceTest {
 
     @Test
     void add() {
-        final long expected = 0;
-        final long actual = service.add(0, 0);
+        final long x = 1;
+        final long y = 2;
+        final long expected = x + y;
+        final long actual = service.add(x, y);
         assertEquals(expected, actual);
     }
 }
