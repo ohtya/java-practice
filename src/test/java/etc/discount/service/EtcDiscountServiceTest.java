@@ -1,5 +1,6 @@
 package etc.discount.service;
 
+import etc.discount.model.DriveData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,8 +20,9 @@ class EtcDiscountServiceTest {
 
     @Test
     void calculate() {
+        final var drive = new DriveData();
         final var expected = 0;
-        final var actual = service.calculate();
+        final var actual = service.calculate(drive);
         assertEquals(expected, actual);
     }
 
