@@ -2,13 +2,13 @@ package etc.discount.service;
 
 import etc.discount.model.CarModel;
 import etc.discount.model.DrivingInfo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * 休日割引を実現するサービスのテスト.
