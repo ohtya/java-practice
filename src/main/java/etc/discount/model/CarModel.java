@@ -7,21 +7,21 @@ public enum CarModel {
     /**
      * 軽自動車等
      */
-    MINI,
+    KEI,
     /**
      * 普通車
      */
-    ORDINARY_CAR,
+    ORDINARY,
     /**
      * 中型車
      */
-    MIDIUM_SIZED_CAR,
+    MIDIUM,
     /**
      * 大型車
      */
-    LARGE_CAR,
+    LARGE,
     /**
      * 特大車
      */
-    EXTRA_LARGE_CAR
+    EXTRA
 }
