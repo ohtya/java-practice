@@ -14,7 +14,7 @@ public interface DiscountService {
     long calculate();
 
     /**
-     * JUnit Sample
+     * 与えられた値を加算します(JUnit Sample)
      *
      * @param x 加算する値
      * @param y 加算する値
