@@ -11,9 +11,8 @@ public class EtcDiscountService implements DiscountService {
         return 0;
     }
 
-    // FIXME: 実装してください
     @Override
     public long add(long x, long y) {
-        return 0;
+        return x + y;
     }
 }
