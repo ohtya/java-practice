@@ -4,6 +4,8 @@ import etc.discount.model.DriveData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -20,7 +22,9 @@ class EtcDiscountServiceTest {
 
     @Test
     void calculate() {
-        final var drive = new DriveData();
+        var admissionAt = LocalDateTime.of(2020, 2, 10, 0, 0);
+        var exitAt = LocalDateTime.of(2020, 2, 10, 0, 0);
+        final var drive = new DriveData(admissionAt, exitAt);
         final var expected = 0;
         final var actual = service.calculate(drive);
         assertEquals(expected, actual);

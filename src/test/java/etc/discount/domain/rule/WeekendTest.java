@@ -1,8 +1,11 @@
 package etc.discount.domain.rule;
 
 import etc.discount.domain.DiscountRule;
+import etc.discount.model.DriveData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,8 +23,11 @@ class WeekendTest {
 
     @Test
     void isApplicable() {
+        var admissionAt = LocalDateTime.of(2020, 2, 10, 0, 0);
+        var exitAt = LocalDateTime.of(2020, 2, 10, 0, 0);
+        final var drive = new DriveData(admissionAt, exitAt);
         final var expected = false;
-        final var actual = rule.isApplicable();
+        final var actual = rule.isApplicable(drive);
         assertEquals(expected, actual);
     }
 

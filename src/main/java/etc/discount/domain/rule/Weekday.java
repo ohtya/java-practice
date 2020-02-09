@@ -1,6 +1,7 @@
 package etc.discount.domain.rule;
 
 import etc.discount.domain.DiscountRule;
+import etc.discount.model.DriveData;
 
 /**
  * 平日朝夕割引
@@ -24,7 +25,7 @@ public class Weekday implements DiscountRule {
      * @return true: 可能, false: 不可
      */
     @Override
-    public boolean isApplicable() {
+    public boolean isApplicable(final DriveData drive) {
         return false;
     }
 
