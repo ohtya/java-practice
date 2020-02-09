@@ -2,11 +2,13 @@ package etc.discount.service;
 
 public class EtcDiscountService implements DiscountService {
 
+    // FIXME: 実装してください
     @Override
     public long calculate() {
         return 0;
     }
 
+    // FIXME: 実装してください
     @Override
     public long add(long x, long y) {
         return 0;
