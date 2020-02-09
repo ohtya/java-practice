@@ -19,17 +19,17 @@ class EtcDiscountServiceTest {
 
     @Test
     void calculate() {
-        final long expected = 0;
-        final long actual = service.calculate();
+        final var expected = 0;
+        final var actual = service.calculate();
         assertEquals(expected, actual);
     }
 
     @Test
     void add() {
-        final long x = 1;
-        final long y = 2;
-        final long expected = x + y;
-        final long actual = service.add(x, y);
+        final var x = 1;
+        final var y = 2;
+        final var expected = x + y;
+        final var actual = service.add(x, y);
         assertEquals(expected, actual);
     }
 }
