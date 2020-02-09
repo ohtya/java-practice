@@ -11,4 +11,13 @@ public interface DiscountService {
      * @return 割引率
      */
     long calculate();
+
+    /**
+     * JUnit Sample
+     *
+     * @param x 加算する値
+     * @param y 加算する値
+     * @return x + y
+     */
+    long add(long x, long y);
 }
