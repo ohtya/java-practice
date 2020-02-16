@@ -3,14 +3,14 @@ package etc.discount.service;
 import etc.discount.model.CarModel;
 import etc.discount.model.DrivingInfo;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 
 /**
  * 休日割引を実現するサービス.
  */
 public class WeekendDiscountService implements DiscountService {
-    private static final long discountRate = 30;
+    private static final long DISCOUNT_RATE = 30;
 
     /**
      * 割引率を計算します
@@ -23,7 +23,7 @@ public class WeekendDiscountService implements DiscountService {
         if (info.carModel == CarModel.KEI || info.carModel == CarModel.ORDINARY) {
             // 休日利用の判定
             if (isWeekendUse(info)) {
-                return discountRate;
+                return DISCOUNT_RATE;
             }
         }
         return 0;
@@ -37,7 +37,7 @@ public class WeekendDiscountService implements DiscountService {
      */
     private boolean isWeekendUse(DrivingInfo info) {
         // 入場時刻、出場時刻どちらかが土日祝の場合は休日利用である
-        if (isWeekend(info.admissionTime) || isWeekend(info.exitTime)) {
+        if (isWeekend(info.admissionAt) || isWeekend(info.exitAt)) {
             return true;
         }
         // TODO：入場時刻、出場時刻共に休日でなくとも、土日祝をまたいでいる場合の処理を追加する
@@ -50,11 +50,9 @@ public class WeekendDiscountService implements DiscountService {
      *
      * @return 休日（true:休日である, false:休日でない）
      */
-    private boolean isWeekend(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int week = cal.get(Calendar.DAY_OF_WEEK);
-        if (week == Calendar.SUNDAY || week == Calendar.SATURDAY) {
+    private boolean isWeekend(LocalDateTime date) {
+        DayOfWeek week = date.getDayOfWeek();
+        if (week == DayOfWeek.SUNDAY || week == DayOfWeek.SATURDAY) {
             return true;
         }
         return false;

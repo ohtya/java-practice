@@ -1,6 +1,6 @@
 package etc.discount.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 走行情報
@@ -13,15 +13,15 @@ public class DrivingInfo {
     /**
      * 入場時刻
      */
-    public Date admissionTime;
+    public LocalDateTime admissionAt;
     /**
      * 出場時刻
      */
-    public Date exitTime;
+    public LocalDateTime exitAt;
 
-    public DrivingInfo(CarModel carModel, Date admissionTime, Date exitTime){
+    public DrivingInfo(CarModel carModel, LocalDateTime admissionAt, LocalDateTime exitAt){
         this.carModel = carModel;
-        this.admissionTime = admissionTime;
-        this.exitTime = exitTime;
+        this.admissionAt = admissionAt;
+        this.exitAt = exitAt;
     }
 }

@@ -4,9 +4,7 @@ import etc.discount.model.CarModel;
 import etc.discount.model.DrivingInfo;
 import org.junit.jupiter.api.Test;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,17 +17,12 @@ public class WeekendDiscountServiceTest {
     @Test
     public void testCalculate() {
         // 車種が普通車、休日入場の場合
-        try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Date admissionTime = df.parse("2020/02/09 12:00:00");
-            Date exitTime = df.parse("2020/02/09 13:00:00");
+        LocalDateTime admissionAt = LocalDateTime.of(2020, 2, 9, 12, 00, 00);
+        LocalDateTime exitAt = LocalDateTime.of(2020, 2, 9, 13, 00, 00);
 
-            DrivingInfo info = new DrivingInfo(CarModel.ORDINARY, admissionTime, exitTime);
-            long expected = 30;
-            long actual = service.calculate(info);
-            assertEquals(expected, actual);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        DrivingInfo info = new DrivingInfo(CarModel.ORDINARY, admissionAt, exitAt);
+        long expected = 30;
+        long actual = service.calculate(info);
+        assertEquals(expected, actual);
     }
 }
