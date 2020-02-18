@@ -136,7 +136,23 @@ class IsApplicableArgumentsProvider implements ArgumentsProvider {
                     .model(CarModel.ORDINARY)
                     .route(Route.URBAN)
                     .build()
-                , false)
+                , false),
+            Arguments.of(
+                DriveData.builder()
+                    .admissionAt(LocalDateTime.of(2020, 2, 7, 23, 59))
+                    .exitAt(LocalDateTime.of(2020, 2, 8, 0, 0))
+                    .model(CarModel.KEI)
+                    .route(Route.LOCAL)
+                    .build()
+                , true),
+            Arguments.of(
+                DriveData.builder()
+                    .admissionAt(LocalDateTime.of(2020, 2, 9, 23, 59))
+                    .exitAt(LocalDateTime.of(2020, 2, 10, 0, 0))
+                    .model(CarModel.KEI)
+                    .route(Route.LOCAL)
+                    .build()
+                , true)
         );
     }
 }
