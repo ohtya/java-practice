@@ -26,7 +26,9 @@ public class Night implements DiscountRule {
      */
     @Override
     public boolean isApplicable(final DriveData drive) {
-        // FIXME: null チェック
+        if (drive == null) {
+            throw new IllegalArgumentException("arg1 can not be null.");
+        }
         return isNight(drive);
     }
 
@@ -38,7 +40,7 @@ public class Night implements DiscountRule {
      */
     @Override
     public long discountRate() {
-        return 0;
+        return 30L;
     }
 
     private boolean isNight(final DriveData drive) {
