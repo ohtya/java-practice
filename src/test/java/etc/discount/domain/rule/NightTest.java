@@ -29,7 +29,10 @@ class NightTest {
         void returnFalseTheBeforeNight() {
             var admissionAt = LocalDateTime.of(2020, 2, 9, 22, 0);
             var exitAt = LocalDateTime.of(2020, 2, 9, 23, 59);
-            final var drive = new DriveData(admissionAt, exitAt);
+            final var drive = DriveData.builder()
+                .admissionAt(admissionAt)
+                .exitAt(exitAt)
+                .build();
             final var expected = false;
             final var actual = rule.isApplicable(drive);
             assertEquals(expected, actual);
@@ -39,7 +42,10 @@ class NightTest {
         void returnTrueThenNight() {
             var admissionAt = LocalDateTime.of(2020, 2, 10, 0, 0);
             var exitAt = LocalDateTime.of(2020, 2, 10, 4, 0);
-            final var drive = new DriveData(admissionAt, exitAt);
+            final var drive = DriveData.builder()
+                .admissionAt(admissionAt)
+                .exitAt(exitAt)
+                .build();
             final var expected = true;
             final var actual = rule.isApplicable(drive);
             assertEquals(expected, actual);
@@ -49,7 +55,10 @@ class NightTest {
         void returnFalseTheAfterNight() {
             var admissionAt = LocalDateTime.of(2020, 2, 10, 4, 1);
             var exitAt = LocalDateTime.of(2020, 2, 10, 23, 59);
-            final var drive = new DriveData(admissionAt, exitAt);
+            final var drive = DriveData.builder()
+                .admissionAt(admissionAt)
+                .exitAt(exitAt)
+                .build();
             final var expected = false;
             final var actual = rule.isApplicable(drive);
             assertEquals(expected, actual);
@@ -60,7 +69,10 @@ class NightTest {
         void returnFalseTheIntoNight() {
             var admissionAt = LocalDateTime.of(2020, 2, 9, 4, 1);
             var exitAt = LocalDateTime.of(2020, 2, 10, 23, 59);
-            final var drive = new DriveData(admissionAt, exitAt);
+            final var drive = DriveData.builder()
+                .admissionAt(admissionAt)
+                .exitAt(exitAt)
+                .build();
             final var expected = false;
             final var actual = rule.isApplicable(drive);
             assertEquals(expected, actual);

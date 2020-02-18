@@ -25,7 +25,10 @@ class WeekdayTest {
     void isApplicable() {
         var admissionAt = LocalDateTime.of(2020, 2, 10, 0, 0);
         var exitAt = LocalDateTime.of(2020, 2, 10, 0, 0);
-        final var drive = new DriveData(admissionAt, exitAt);
+        final var drive = DriveData.builder()
+            .admissionAt(admissionAt)
+            .exitAt(exitAt)
+            .build();
         final var expected = false;
         final var actual = rule.isApplicable(drive);
         assertEquals(expected, actual);
