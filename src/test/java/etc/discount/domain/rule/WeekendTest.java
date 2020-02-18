@@ -46,109 +46,117 @@ class WeekendTest {
 
 class IsApplicableArgumentsProvider implements ArgumentsProvider {
 
+    private static final LocalDateTime FRIDAY_START_AT = LocalDateTime.of(2020, 2, 7, 0, 0);
+    private static final LocalDateTime FRIDAY_END_AT = LocalDateTime.of(2020, 2, 7, 23, 59);
+    private static final LocalDateTime SATURDAY_START_AT = LocalDateTime.of(2020, 2, 8, 0, 0);
+    private static final LocalDateTime SATURDAY_END_AT = LocalDateTime.of(2020, 2, 8, 23, 59);
+    private static final LocalDateTime SUNDAY_START_AT = LocalDateTime.of(2020, 2, 9, 0, 0);
+    private static final LocalDateTime SUNDAY_END_AT = LocalDateTime.of(2020, 2, 9, 23, 59);
+    private static final LocalDateTime MONDAY_START_AT = LocalDateTime.of(2020, 2, 10, 0, 0);
+
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+    public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
             Arguments.of(
                 DriveData.builder()
-                    .admissionAt(LocalDateTime.of(2020, 2, 9, 0, 0))
-                    .exitAt(LocalDateTime.of(2020, 2, 9, 23, 59))
+                    .admissionAt(SUNDAY_START_AT)
+                    .exitAt(SUNDAY_END_AT)
                     .model(CarModel.KEI)
                     .route(Route.LOCAL)
                     .build()
                 , true),
             Arguments.of(
                 DriveData.builder()
-                    .admissionAt(LocalDateTime.of(2020, 2, 9, 0, 0))
-                    .exitAt(LocalDateTime.of(2020, 2, 9, 23, 59))
+                    .admissionAt(SUNDAY_START_AT)
+                    .exitAt(SUNDAY_END_AT)
                     .model(CarModel.ORDINARY)
                     .route(Route.LOCAL)
                     .build()
                 , true),
             Arguments.of(
                 DriveData.builder()
-                    .admissionAt(LocalDateTime.of(2020, 2, 9, 0, 0))
-                    .exitAt(LocalDateTime.of(2020, 2, 9, 23, 59))
+                    .admissionAt(SUNDAY_START_AT)
+                    .exitAt(SUNDAY_END_AT)
                     .model(CarModel.MIDIUM)
                     .route(Route.LOCAL)
                     .build()
                 , false),
             Arguments.of(
                 DriveData.builder()
-                    .admissionAt(LocalDateTime.of(2020, 2, 9, 0, 0))
-                    .exitAt(LocalDateTime.of(2020, 2, 9, 23, 59))
+                    .admissionAt(SUNDAY_START_AT)
+                    .exitAt(SUNDAY_END_AT)
                     .model(CarModel.LARGE)
                     .route(Route.LOCAL)
                     .build()
                 , false),
             Arguments.of(
                 DriveData.builder()
-                    .admissionAt(LocalDateTime.of(2020, 2, 9, 0, 0))
-                    .exitAt(LocalDateTime.of(2020, 2, 9, 23, 59))
+                    .admissionAt(SUNDAY_START_AT)
+                    .exitAt(SUNDAY_END_AT)
                     .model(CarModel.EXTRA)
                     .route(Route.LOCAL)
                     .build()
                 , false),
             Arguments.of(
                 DriveData.builder()
-                    .admissionAt(LocalDateTime.of(2020, 2, 8, 0, 0))
-                    .exitAt(LocalDateTime.of(2020, 2, 8, 23, 59))
+                    .admissionAt(SATURDAY_START_AT)
+                    .exitAt(SATURDAY_END_AT)
                     .model(CarModel.KEI)
                     .route(Route.LOCAL)
                     .build()
                 , true),
             Arguments.of(
                 DriveData.builder()
-                    .admissionAt(LocalDateTime.of(2020, 2, 8, 0, 0))
-                    .exitAt(LocalDateTime.of(2020, 2, 8, 23, 59))
+                    .admissionAt(SATURDAY_START_AT)
+                    .exitAt(SATURDAY_END_AT)
                     .model(CarModel.ORDINARY)
                     .route(Route.LOCAL)
                     .build()
                 , true),
             Arguments.of(
                 DriveData.builder()
-                    .admissionAt(LocalDateTime.of(2020, 2, 7, 0, 0))
-                    .exitAt(LocalDateTime.of(2020, 2, 7, 23, 59))
+                    .admissionAt(FRIDAY_START_AT)
+                    .exitAt(FRIDAY_END_AT)
                     .model(CarModel.KEI)
                     .route(Route.LOCAL)
                     .build()
                 , false),
             Arguments.of(
                 DriveData.builder()
-                    .admissionAt(LocalDateTime.of(2020, 2, 7, 0, 0))
-                    .exitAt(LocalDateTime.of(2020, 2, 7, 23, 59))
+                    .admissionAt(FRIDAY_START_AT)
+                    .exitAt(FRIDAY_END_AT)
                     .model(CarModel.ORDINARY)
                     .route(Route.LOCAL)
                     .build()
                 , false),
             Arguments.of(
                 DriveData.builder()
-                    .admissionAt(LocalDateTime.of(2020, 2, 9, 0, 0))
-                    .exitAt(LocalDateTime.of(2020, 2, 9, 23, 59))
+                    .admissionAt(SUNDAY_START_AT)
+                    .exitAt(SUNDAY_END_AT)
                     .model(CarModel.KEI)
                     .route(Route.URBAN)
                     .build()
                 , false),
             Arguments.of(
                 DriveData.builder()
-                    .admissionAt(LocalDateTime.of(2020, 2, 9, 0, 0))
-                    .exitAt(LocalDateTime.of(2020, 2, 9, 23, 59))
+                    .admissionAt(SUNDAY_START_AT)
+                    .exitAt(SUNDAY_END_AT)
                     .model(CarModel.ORDINARY)
                     .route(Route.URBAN)
                     .build()
                 , false),
             Arguments.of(
                 DriveData.builder()
-                    .admissionAt(LocalDateTime.of(2020, 2, 7, 23, 59))
-                    .exitAt(LocalDateTime.of(2020, 2, 8, 0, 0))
+                    .admissionAt(FRIDAY_END_AT)
+                    .exitAt(SATURDAY_START_AT)
                     .model(CarModel.KEI)
                     .route(Route.LOCAL)
                     .build()
                 , true),
             Arguments.of(
                 DriveData.builder()
-                    .admissionAt(LocalDateTime.of(2020, 2, 9, 23, 59))
-                    .exitAt(LocalDateTime.of(2020, 2, 10, 0, 0))
+                    .admissionAt(SUNDAY_END_AT)
+                    .exitAt(MONDAY_START_AT)
                     .model(CarModel.KEI)
                     .route(Route.LOCAL)
                     .build()
