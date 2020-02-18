@@ -15,4 +15,5 @@ public class DriveData {
     private LocalDateTime admissionAt;
     private LocalDateTime exitAt;
     private CarModel model;
+    private Route route;
 }
