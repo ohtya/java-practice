@@ -23,9 +23,10 @@ class NightTest {
     }
 
     @Nested
-    class isApplicable {
+    class IsApplicable {
+
         @Test
-        void returnFalseThenNotNight() {
+        void returnFalseTheBeforeNight() {
             var admissionAt = LocalDateTime.of(2020, 2, 9, 22, 0);
             var exitAt = LocalDateTime.of(2020, 2, 9, 23, 59);
             final var drive = new DriveData(admissionAt, exitAt);
@@ -43,12 +44,37 @@ class NightTest {
             final var actual = rule.isApplicable(drive);
             assertEquals(expected, actual);
         }
+
+        @Test
+        void returnFalseTheAfterNight() {
+            var admissionAt = LocalDateTime.of(2020, 2, 10, 4, 1);
+            var exitAt = LocalDateTime.of(2020, 2, 10, 23, 59);
+            final var drive = new DriveData(admissionAt, exitAt);
+            final var expected = false;
+            final var actual = rule.isApplicable(drive);
+            assertEquals(expected, actual);
+        }
+
+        // FIXME: 本来は日マタギもありえる
+        @Test
+        void returnFalseTheIntoNight() {
+            var admissionAt = LocalDateTime.of(2020, 2, 9, 4, 1);
+            var exitAt = LocalDateTime.of(2020, 2, 10, 23, 59);
+            final var drive = new DriveData(admissionAt, exitAt);
+            final var expected = false;
+            final var actual = rule.isApplicable(drive);
+            assertEquals(expected, actual);
+        }
     }
 
-    @Test
-    void discountRate() {
-        final var expected = 0L;
-        final var actual = rule.discountRate();
-        assertEquals(expected, actual);
+    @Nested
+    class DiscountRate {
+
+        @Test
+        void returnDiscountRate() {
+            final var expected = 30L;
+            final var actual = rule.discountRate();
+            assertEquals(expected, actual);
+        }
     }
 }
