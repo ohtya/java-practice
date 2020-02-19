@@ -15,7 +15,7 @@ public enum CarModel {
     /**
      * 中型車
      */
-    MIDIUM,
+    MEDIUM,
     /**
      * 大型車
      */
