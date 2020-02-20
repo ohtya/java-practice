@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 @Builder
 @Value
 public class DriveData {
-    // FIXME: 割引率を導出するために必要な項目のみ渡す
     private LocalDateTime admissionAt;
     private LocalDateTime exitAt;
     private CarModel model;
     private Route route;
+    private long count;
 }
