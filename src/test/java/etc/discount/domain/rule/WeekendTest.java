@@ -30,7 +30,7 @@ class WeekendTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(IsApplicableArgumentsProvider.class)
+    @ArgumentsSource(WeekEndIsApplicableArgumentsProvider.class)
     void isApplicable(final DriveData drive, final boolean expected) {
         final var actual = rule.isApplicable(drive);
         assertEquals(expected, actual);
@@ -44,7 +44,7 @@ class WeekendTest {
     }
 }
 
-class IsApplicableArgumentsProvider implements ArgumentsProvider {
+class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
 
     private static final LocalDateTime FRIDAY_START_AT = LocalDateTime.of(2020, 2, 7, 0, 0);
     private static final LocalDateTime FRIDAY_END_AT = LocalDateTime.of(2020, 2, 7, 23, 59);
