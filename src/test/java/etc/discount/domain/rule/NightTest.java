@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * {@link Night} unit test
+ * FIXME: parameterized test 化
  */
 class NightTest {
 

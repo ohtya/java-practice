@@ -29,6 +29,7 @@ public class Weekend implements DiscountRule {
 
     /**
      * 入り口料金所または出口料金所を休日に通過した場合に適用可能です
+     * FIXME: 本来は休日跨ぎも適用可だが、面倒なので今回は省略する
      * <p>
      * また {@link CarModel} が「普通車」又は「軽自動車等」に該当する車両が対象です
      * <p>
