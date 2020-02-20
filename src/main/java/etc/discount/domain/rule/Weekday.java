@@ -37,7 +37,7 @@ public class Weekday implements DiscountRule {
      * @return 割引率(還元率)
      */
     @Override
-    public long discountRate() {
+    public long discountRate(final DriveData drive) {
         return 0;
     }
 }

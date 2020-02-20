@@ -86,7 +86,7 @@ class NightTest {
         @Test
         void returnDiscountRate() {
             final var expected = 30L;
-            final var actual = rule.discountRate();
+            final var actual = rule.discountRate(DriveData.builder().build());
             assertEquals(expected, actual);
         }
     }

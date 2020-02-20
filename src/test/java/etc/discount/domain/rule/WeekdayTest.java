@@ -37,7 +37,7 @@ class WeekdayTest {
     @ParameterizedTest
     @ArgumentsSource(WeekdayDiscountRateArgumentsProvider.class)
     void discountRate(final DriveData drive, final long expected) {
-        final var actual = rule.discountRate();
+        final var actual = rule.discountRate(drive);
         assertEquals(expected, actual);
     }
 }

@@ -53,7 +53,7 @@ public class Weekend implements DiscountRule {
      * @return 割引率
      */
     @Override
-    public long discountRate() {
+    public long discountRate(final DriveData drive) {
         return 30;
     }
 }

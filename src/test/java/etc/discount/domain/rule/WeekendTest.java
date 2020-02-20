@@ -5,7 +5,6 @@ import etc.discount.model.CarModel;
 import etc.discount.model.DriveData;
 import etc.discount.model.Route;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -36,10 +35,11 @@ class WeekendTest {
         assertEquals(expected, actual);
     }
 
-    @Test
-    void returnDiscountRate() {
-        final var expected = 30L;
-        final var actual = rule.discountRate();
+
+    @ParameterizedTest
+    @ArgumentsSource(WeekendDiscountRateArgumentsProvider.class)
+    void discountRate(final DriveData drive, final long expected) {
+        final var actual = rule.discountRate(drive);
         assertEquals(expected, actual);
     }
 }
@@ -161,6 +161,18 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .route(Route.LOCAL)
                     .build()
                 , true)
+        );
+    }
+}
+
+class WeekendDiscountRateArgumentsProvider implements ArgumentsProvider {
+
+    @Override
+    public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+        return Stream.of(
+            Arguments.of(
+                DriveData.builder().build()
+                , 30)
         );
     }
 }

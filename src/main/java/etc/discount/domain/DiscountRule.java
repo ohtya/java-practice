@@ -26,5 +26,5 @@ public interface DiscountRule {
      *
      * @return 割引率(0から100)
      */
-    long discountRate();
+    long discountRate(final DriveData drive);
 }
