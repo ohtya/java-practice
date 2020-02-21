@@ -4,7 +4,7 @@ import etc.discount.domain.DiscountRule;
 import etc.discount.domain.rule.Night;
 import etc.discount.domain.rule.Weekday;
 import etc.discount.domain.rule.Weekend;
-import etc.discount.model.DriveData;
+import etc.discount.model.Drive;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class EtcDiscountService implements DiscountService {
     private final List<DiscountRule> discountRules = List.of(new Night(), new Weekend(), new Weekday());
 
     @Override
-    public long calculate(final DriveData drive) {
+    public long calculate(final Drive drive) {
         return discountRules.stream().filter(
             discountRule -> discountRule.isApplicable(drive)
         ).map(

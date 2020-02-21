@@ -1,7 +1,7 @@
 package etc.discount.service;
 
 import etc.discount.model.CarModel;
-import etc.discount.model.DriveData;
+import etc.discount.model.Drive;
 import etc.discount.model.Route;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ class EtcDiscountServiceTest {
 
     @ParameterizedTest
     @ArgumentsSource(EtcDiscountServiceCalculateArgumentsProvider.class)
-    void discountRate(final DriveData drive, final long expected) {
+    void discountRate(final Drive drive, final long expected) {
         final var actual = service.calculate(drive);
         assertEquals(expected, actual);
     }
@@ -55,7 +55,7 @@ class EtcDiscountServiceCalculateArgumentsProvider implements ArgumentsProvider 
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(SUNDAY_START_AT)
                     .exitAt(SUNDAY_END_AT)
                     .model(CarModel.KEI)

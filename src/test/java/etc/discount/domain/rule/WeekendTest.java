@@ -2,7 +2,7 @@ package etc.discount.domain.rule;
 
 import etc.discount.domain.DiscountRule;
 import etc.discount.model.CarModel;
-import etc.discount.model.DriveData;
+import etc.discount.model.Drive;
 import etc.discount.model.Route;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -30,7 +30,7 @@ class WeekendTest {
 
     @ParameterizedTest
     @ArgumentsSource(WeekEndIsApplicableArgumentsProvider.class)
-    void isApplicable(final DriveData drive, final boolean expected) {
+    void isApplicable(final Drive drive, final boolean expected) {
         final var actual = rule.isApplicable(drive);
         assertEquals(expected, actual);
     }
@@ -38,7 +38,7 @@ class WeekendTest {
 
     @ParameterizedTest
     @ArgumentsSource(WeekendDiscountRateArgumentsProvider.class)
-    void discountRate(final DriveData drive, final long expected) {
+    void discountRate(final Drive drive, final long expected) {
         final var actual = rule.discountRate(drive);
         assertEquals(expected, actual);
     }
@@ -58,7 +58,7 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(SUNDAY_START_AT)
                     .exitAt(SUNDAY_END_AT)
                     .model(CarModel.KEI)
@@ -66,7 +66,7 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , true),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(SUNDAY_START_AT)
                     .exitAt(SUNDAY_END_AT)
                     .model(CarModel.ORDINARY)
@@ -74,7 +74,7 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , true),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(SUNDAY_START_AT)
                     .exitAt(SUNDAY_END_AT)
                     .model(CarModel.MIDIUM)
@@ -82,7 +82,7 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , false),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(SUNDAY_START_AT)
                     .exitAt(SUNDAY_END_AT)
                     .model(CarModel.LARGE)
@@ -90,7 +90,7 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , false),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(SUNDAY_START_AT)
                     .exitAt(SUNDAY_END_AT)
                     .model(CarModel.EXTRA)
@@ -98,7 +98,7 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , false),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(SATURDAY_START_AT)
                     .exitAt(SATURDAY_END_AT)
                     .model(CarModel.KEI)
@@ -106,7 +106,7 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , true),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(SATURDAY_START_AT)
                     .exitAt(SATURDAY_END_AT)
                     .model(CarModel.ORDINARY)
@@ -114,7 +114,7 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , true),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(FRIDAY_START_AT)
                     .exitAt(FRIDAY_END_AT)
                     .model(CarModel.KEI)
@@ -122,7 +122,7 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , false),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(FRIDAY_START_AT)
                     .exitAt(FRIDAY_END_AT)
                     .model(CarModel.ORDINARY)
@@ -130,7 +130,7 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , false),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(SUNDAY_START_AT)
                     .exitAt(SUNDAY_END_AT)
                     .model(CarModel.KEI)
@@ -138,7 +138,7 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , false),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(SUNDAY_START_AT)
                     .exitAt(SUNDAY_END_AT)
                     .model(CarModel.ORDINARY)
@@ -146,7 +146,7 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , false),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(FRIDAY_END_AT)
                     .exitAt(SATURDAY_START_AT)
                     .model(CarModel.KEI)
@@ -154,7 +154,7 @@ class WeekEndIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , true),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(SUNDAY_END_AT)
                     .exitAt(MONDAY_START_AT)
                     .model(CarModel.KEI)
@@ -171,7 +171,7 @@ class WeekendDiscountRateArgumentsProvider implements ArgumentsProvider {
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
             Arguments.of(
-                DriveData.builder().build()
+                Drive.builder().build()
                 , 30)
         );
     }

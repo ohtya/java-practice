@@ -3,7 +3,7 @@ package etc.discount.domain.rule;
 import etc.discount.Holiday;
 import etc.discount.domain.DiscountRule;
 import etc.discount.model.CarModel;
-import etc.discount.model.DriveData;
+import etc.discount.model.Drive;
 import etc.discount.model.Route;
 
 import java.util.Arrays;
@@ -38,7 +38,7 @@ public class Weekend implements DiscountRule {
      * @return true: 可能, false: 不可
      */
     @Override
-    public boolean isApplicable(final DriveData drive) {
+    public boolean isApplicable(final Drive drive) {
         if (drive == null) {
             throw new IllegalArgumentException("arg1 can not be null.");
         }
@@ -55,7 +55,7 @@ public class Weekend implements DiscountRule {
      * @return 割引率
      */
     @Override
-    public long discountRate(final DriveData drive) {
+    public long discountRate(final Drive drive) {
         return 30;
     }
 }

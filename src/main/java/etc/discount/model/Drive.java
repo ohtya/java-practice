@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  */
 @Builder
 @Value
-public class DriveData {
+public class Drive {
     private LocalDateTime admissionAt;
     private LocalDateTime exitAt;
     private CarModel model;

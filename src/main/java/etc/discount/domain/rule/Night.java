@@ -2,7 +2,7 @@ package etc.discount.domain.rule;
 
 import etc.discount.domain.DiscountRule;
 import etc.discount.model.CarModel;
-import etc.discount.model.DriveData;
+import etc.discount.model.Drive;
 
 import java.time.LocalTime;
 
@@ -25,7 +25,7 @@ public class Night implements DiscountRule {
      * @return true: 可能, false: 不可
      */
     @Override
-    public boolean isApplicable(final DriveData drive) {
+    public boolean isApplicable(final Drive drive) {
         if (drive == null) {
             throw new IllegalArgumentException("arg1 can not be null.");
         }
@@ -39,11 +39,11 @@ public class Night implements DiscountRule {
      * @return 割引率
      */
     @Override
-    public long discountRate(final DriveData drive) {
+    public long discountRate(final Drive drive) {
         return 30L;
     }
 
-    private boolean isNight(final DriveData drive) {
+    private boolean isNight(final Drive drive) {
         // FIXME: 日跨ぎ
         return !(START_AT.isAfter(drive.getAdmissionAt().toLocalTime()) ||
                 END_AT.isBefore(drive.getExitAt().toLocalTime()));

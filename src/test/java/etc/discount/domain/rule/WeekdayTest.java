@@ -1,7 +1,7 @@
 package etc.discount.domain.rule;
 
 import etc.discount.domain.DiscountRule;
-import etc.discount.model.DriveData;
+import etc.discount.model.Drive;
 import etc.discount.model.Route;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -29,14 +29,14 @@ class WeekdayTest {
 
     @ParameterizedTest
     @ArgumentsSource(WeekdayIsApplicableArgumentsProvider.class)
-    void isApplicable(final DriveData drive, final boolean expected) {
+    void isApplicable(final Drive drive, final boolean expected) {
         final var actual = rule.isApplicable(drive);
         assertEquals(expected, actual);
     }
 
     @ParameterizedTest
     @ArgumentsSource(WeekdayDiscountRateArgumentsProvider.class)
-    void discountRate(final DriveData drive, final long expected) {
+    void discountRate(final Drive drive, final long expected) {
         final var actual = rule.discountRate(drive);
         assertEquals(expected, actual);
     }
@@ -64,7 +64,7 @@ class WeekdayIsApplicableArgumentsProvider implements ArgumentsProvider {
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(WEEKDAY_MORNING_START_AT)
                     .exitAt(WEEKDAY_MORNING_END_AT)
                     .route(Route.LOCAL)
@@ -72,7 +72,7 @@ class WeekdayIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , true),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(WEEKDAY_EVENING_START_AT)
                     .exitAt(WEEKDAY_EVENING_END_AT)
                     .route(Route.LOCAL)
@@ -80,7 +80,7 @@ class WeekdayIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , true),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(WEEKDAY_NIGHT_END_AT)
                     .exitAt(WEEKDAY_MORNING_START_AT)
                     .route(Route.LOCAL)
@@ -88,7 +88,7 @@ class WeekdayIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , true),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(WEEKDAY_MORNING_END_AT)
                     .exitAt(WEEKDAY_DAY_START_AT)
                     .route(Route.LOCAL)
@@ -96,7 +96,7 @@ class WeekdayIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , true),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(SATURDAY_MORNING_START_AT)
                     .exitAt(SATURDAY_MORNING_END_AT)
                     .route(Route.LOCAL)
@@ -104,7 +104,7 @@ class WeekdayIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , false),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(SUNDAY_EVENING_START_AT)
                     .exitAt(SUNDAY_EVENING_END_AT)
                     .route(Route.LOCAL)
@@ -112,7 +112,7 @@ class WeekdayIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , false),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(WEEKDAY_MORNING_START_AT)
                     .exitAt(WEEKDAY_MORNING_END_AT)
                     .route(Route.URBAN)
@@ -120,7 +120,7 @@ class WeekdayIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , false),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(WEEKDAY_MORNING_START_AT)
                     .exitAt(WEEKDAY_MORNING_END_AT)
                     .route(Route.LOCAL)
@@ -128,7 +128,7 @@ class WeekdayIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , false),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(WEEKDAY_MORNING_START_AT)
                     .exitAt(WEEKDAY_MORNING_END_AT)
                     .route(Route.LOCAL)
@@ -136,7 +136,7 @@ class WeekdayIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , false),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(WEEKDAY_MORNING_START_AT)
                     .exitAt(WEEKDAY_MORNING_END_AT)
                     .route(Route.LOCAL)
@@ -144,7 +144,7 @@ class WeekdayIsApplicableArgumentsProvider implements ArgumentsProvider {
                     .build()
                 , true),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .admissionAt(WEEKDAY_MORNING_START_AT)
                     .exitAt(WEEKDAY_MORNING_END_AT)
                     .route(Route.LOCAL)
@@ -167,27 +167,27 @@ class WeekdayDiscountRateArgumentsProvider implements ArgumentsProvider {
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .count(MIN_COUNT)
                     .build()
                 , 0),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .count(FIRST_BOUNDARY_COUNT)
                     .build()
                 , 0),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .count(SECOND_BOUNDARY_COUNT)
                     .build()
                 , 30),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .count(THIRD_BOUNDARY_COUNT)
                     .build()
                 , 30),
             Arguments.of(
-                DriveData.builder()
+                Drive.builder()
                     .count(FINAL_BOUNDARY_COUNT)
                     .build()
                 , 50)

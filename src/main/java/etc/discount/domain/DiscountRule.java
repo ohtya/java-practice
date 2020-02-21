@@ -1,6 +1,6 @@
 package etc.discount.domain;
 
-import etc.discount.model.DriveData;
+import etc.discount.model.Drive;
 
 /**
  * 割引ルール
@@ -19,12 +19,12 @@ public interface DiscountRule {
      *
      * @return true: 可能, false: 不可
      */
-    boolean isApplicable(final DriveData drive);
+    boolean isApplicable(final Drive drive);
 
     /**
      * ルールを適用した場合の割引率を返す
      *
      * @return 割引率(0から100)
      */
-    long discountRate(final DriveData drive);
+    long discountRate(final Drive drive);
 }

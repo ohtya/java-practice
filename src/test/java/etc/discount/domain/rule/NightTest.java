@@ -1,7 +1,7 @@
 package etc.discount.domain.rule;
 
 import etc.discount.domain.DiscountRule;
-import etc.discount.model.DriveData;
+import etc.discount.model.Drive;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ class NightTest {
         void returnFalseTheBeforeNight() {
             var admissionAt = LocalDateTime.of(2020, 2, 9, 22, 0);
             var exitAt = LocalDateTime.of(2020, 2, 9, 23, 59);
-            final var drive = DriveData.builder()
+            final var drive = Drive.builder()
                 .admissionAt(admissionAt)
                 .exitAt(exitAt)
                 .build();
@@ -43,7 +43,7 @@ class NightTest {
         void returnTrueThenNight() {
             var admissionAt = LocalDateTime.of(2020, 2, 10, 0, 0);
             var exitAt = LocalDateTime.of(2020, 2, 10, 4, 0);
-            final var drive = DriveData.builder()
+            final var drive = Drive.builder()
                 .admissionAt(admissionAt)
                 .exitAt(exitAt)
                 .build();
@@ -56,7 +56,7 @@ class NightTest {
         void returnFalseTheAfterNight() {
             var admissionAt = LocalDateTime.of(2020, 2, 10, 4, 1);
             var exitAt = LocalDateTime.of(2020, 2, 10, 23, 59);
-            final var drive = DriveData.builder()
+            final var drive = Drive.builder()
                 .admissionAt(admissionAt)
                 .exitAt(exitAt)
                 .build();
@@ -70,7 +70,7 @@ class NightTest {
         void returnFalseTheIntoNight() {
             var admissionAt = LocalDateTime.of(2020, 2, 9, 4, 1);
             var exitAt = LocalDateTime.of(2020, 2, 10, 23, 59);
-            final var drive = DriveData.builder()
+            final var drive = Drive.builder()
                 .admissionAt(admissionAt)
                 .exitAt(exitAt)
                 .build();
@@ -86,7 +86,7 @@ class NightTest {
         @Test
         void returnDiscountRate() {
             final var expected = 30L;
-            final var actual = rule.discountRate(DriveData.builder().build());
+            final var actual = rule.discountRate(Drive.builder().build());
             assertEquals(expected, actual);
         }
     }
