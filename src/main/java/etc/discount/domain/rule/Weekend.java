@@ -43,7 +43,9 @@ public class Weekend implements DiscountRule {
             throw new IllegalArgumentException("arg1 can not be null.");
         }
 
-        return Objects.equals(drive.getRoute(), Route.LOCAL) && APPLICABLE_CAR_MODEL.contains(drive.getModel()) && (APPLICABLE_DAY_OF_WEEK.contains(drive.getAdmissionAt().getDayOfWeek()) || APPLICABLE_DAY_OF_WEEK.contains(drive.getExitAt().getDayOfWeek()));
+        return Objects.equals(drive.getRoute(), Route.LOCAL) &&
+            APPLICABLE_CAR_MODEL.contains(drive.getModel()) &&
+            (APPLICABLE_DAY_OF_WEEK.contains(drive.getAdmissionAt().getDayOfWeek()) || APPLICABLE_DAY_OF_WEEK.contains(drive.getExitAt().getDayOfWeek()));
     }
 
     /**

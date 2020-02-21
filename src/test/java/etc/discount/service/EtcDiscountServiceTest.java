@@ -1,10 +1,18 @@
 package etc.discount.service;
 
+import etc.discount.model.CarModel;
 import etc.discount.model.DriveData;
+import etc.discount.model.Route;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import java.time.LocalDateTime;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,15 +28,9 @@ class EtcDiscountServiceTest {
         service = new EtcDiscountService();
     }
 
-    @Test
-    void calculate() {
-        var admissionAt = LocalDateTime.of(2020, 2, 10, 0, 0);
-        var exitAt = LocalDateTime.of(2020, 2, 10, 0, 0);
-        final var drive = DriveData.builder()
-            .admissionAt(admissionAt)
-            .exitAt(exitAt)
-            .build();
-        final var expected = 0;
+    @ParameterizedTest
+    @ArgumentsSource(EtcDiscountServiceCalculateArgumentsProvider.class)
+    void discountRate(final DriveData drive, final long expected) {
         final var actual = service.calculate(drive);
         assertEquals(expected, actual);
     }
@@ -40,5 +42,26 @@ class EtcDiscountServiceTest {
         final var expected = x + y;
         final var actual = service.add(x, y);
         assertEquals(expected, actual);
+    }
+}
+
+class EtcDiscountServiceCalculateArgumentsProvider implements ArgumentsProvider {
+
+    private static final LocalDateTime SUNDAY_START_AT = LocalDateTime.of(2020, 2, 9, 0, 0);
+    private static final LocalDateTime SUNDAY_END_AT = LocalDateTime.of(2020, 2, 9, 23, 59);
+
+    // FIXME: 各割引1パターンずつ実施する
+    @Override
+    public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+        return Stream.of(
+            Arguments.of(
+                DriveData.builder()
+                    .admissionAt(SUNDAY_START_AT)
+                    .exitAt(SUNDAY_END_AT)
+                    .model(CarModel.KEI)
+                    .route(Route.LOCAL)
+                    .build()
+                , 30)
+        );
     }
 }
