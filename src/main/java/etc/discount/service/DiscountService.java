@@ -1,6 +1,6 @@
 package etc.discount.service;
 
-import etc.discount.model.Drive;
+import etc.discount.model.Driving;
 
 /**
  * 割引を実現するサービス.
@@ -9,11 +9,11 @@ public interface DiscountService {
 
     /**
      * 割引率を計算します
+     * FIXME: パラメータ
      *
-     * @param drive {@link Drive}
      * @return 割引率
      */
-    long calculate(final Drive drive);
+    long calculate(long price, Driving info);
 
     /**
      * 与えられた値を加算します(JUnit Sample)

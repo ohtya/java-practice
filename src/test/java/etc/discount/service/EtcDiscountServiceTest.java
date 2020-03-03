@@ -1,19 +1,13 @@
 package etc.discount.service;
 
-import etc.discount.model.CarModel;
-import etc.discount.model.Drive;
-import etc.discount.model.Route;
+import etc.discount.model.Driving;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.ArgumentsProvider;
-import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import java.time.LocalDateTime;
-import java.util.stream.Stream;
 
+import static etc.discount.model.CarModel.KEI;
+import static etc.discount.model.CarModel.ORDINARY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -25,14 +19,9 @@ class EtcDiscountServiceTest {
 
     @BeforeEach
     void setup() {
-        service = new EtcDiscountService();
-    }
+//        LocalDateTime dt = new LocalDateTime();
+//        DrivingInformation(dt, dt,"", "")
 
-    @ParameterizedTest
-    @ArgumentsSource(EtcDiscountServiceCalculateArgumentsProvider.class)
-    void discountRate(final Drive drive, final long expected) {
-        final var actual = service.calculate(drive);
-        assertEquals(expected, actual);
     }
 
     @Test
@@ -43,25 +32,114 @@ class EtcDiscountServiceTest {
         final var actual = service.add(x, y);
         assertEquals(expected, actual);
     }
-}
 
-class EtcDiscountServiceCalculateArgumentsProvider implements ArgumentsProvider {
+    /**
+     * 平日朝夕割引
+     */
+    @Test
+    void calculate_1() {
+        var expected = 500;
+        long price = 1000;
 
-    private static final LocalDateTime SUNDAY_START_AT = LocalDateTime.of(2020, 2, 9, 0, 0);
-    private static final LocalDateTime SUNDAY_END_AT = LocalDateTime.of(2020, 2, 9, 23, 59);
+        // 平日割引 朝 入場時刻
+        LocalDateTime enterDt = LocalDateTime.of(2020,2,19,6,00);
+        LocalDateTime leavingDt = LocalDateTime.of(2020,2,19, 9,00);
+        Driving info = new Driving(ORDINARY, enterDt,leavingDt,"","");
+        service = new EtcDiscountService(info);
+        var actual = service.calculate(price);
+        assertEquals(expected, actual);
 
-    // FIXME: 各割引1パターンずつ実施する
-    @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
-        return Stream.of(
-            Arguments.of(
-                Drive.builder()
-                    .admissionAt(SUNDAY_START_AT)
-                    .exitAt(SUNDAY_END_AT)
-                    .model(CarModel.KEI)
-                    .route(Route.LOCAL)
-                    .build()
-                , 30)
-        );
+        // 平日割引 朝　退場時刻
+        enterDt = LocalDateTime.of(2020,2,19,5,59);
+        leavingDt = LocalDateTime.of(2020,2,19,8,59);
+        info = new Driving(ORDINARY, enterDt,leavingDt,"","");
+        service = new EtcDiscountService(info);
+        actual = service.calculate(price);
+        assertEquals(expected, actual);
+
+        // 平日割引 夕　入場時刻
+        enterDt = LocalDateTime.of(2020,2,19,17,00);
+        leavingDt = LocalDateTime.of(2020,2,19,20,00);
+        info = new Driving(ORDINARY, enterDt,leavingDt,"","");
+        service = new EtcDiscountService(info);
+        actual = service.calculate(price);
+        assertEquals(expected, actual);
+
+        // 平日割引 夕　退場時刻
+        enterDt = LocalDateTime.of(2020,2,19,16,59);
+        leavingDt = LocalDateTime.of(2020,2,19,19,59);
+        info = new Driving(ORDINARY, enterDt,leavingDt,"","");
+        service = new EtcDiscountService(info);
+        actual = service.calculate(price);
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * 休日割引
+     */
+    @Test
+    void calculate_2() {
+        var expected = 700;
+        long price = 1000;
+
+        // 休日割引
+        LocalDateTime enterDt = LocalDateTime.of(2020,2,16,6,00);
+        LocalDateTime leavingDt = LocalDateTime.of(2020,2,16, 9,00);
+        Driving info = new Driving(ORDINARY, enterDt,leavingDt,"","");
+        service = new EtcDiscountService(info);
+        var actual = service.calculate(price);
+        assertEquals(expected, actual);
+
+        info.setType(KEI);
+        service = new EtcDiscountService(info);
+        actual = service.calculate(price);
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * 深夜割引
+     */
+    @Test
+    void calculate_3() {
+        var expected = 700;
+        long price = 1000;
+
+        // 深夜割引　入場時刻
+        LocalDateTime enterDt = LocalDateTime.of(2020, 2, 19, 0, 00);
+        LocalDateTime leavingDt = LocalDateTime.of(2020, 2, 19, 4, 00);
+        Driving info = new Driving(ORDINARY, enterDt, leavingDt, "", "");
+        service = new EtcDiscountService(info);
+        var actual = service.calculate(price);
+        assertEquals(expected, actual);
+
+        // 深夜割引　退場時刻
+        enterDt = LocalDateTime.of(2020, 2, 18, 23, 59);
+        leavingDt = LocalDateTime.of(2020, 2, 19, 3, 59);
+        info = new Driving(ORDINARY, enterDt, leavingDt, "", "");
+        service = new EtcDiscountService(info);
+        actual = service.calculate(price);
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * 該当なし
+     */
+    @Test
+    void calculate_4() {
+        var expected = 1000;
+        long price = 1000;
+
+        // 休日割引
+        LocalDateTime enterDt = LocalDateTime.of(2020,2,18,12,00);
+        LocalDateTime leavingDt = LocalDateTime.of(2020,2,18, 13,00);
+        Driving info = new Driving(ORDINARY, enterDt,leavingDt,"","");
+        service = new EtcDiscountService(info);
+        var actual = service.calculate(price);
+        assertEquals(expected, actual);
+
+        info.setType(KEI);
+        service = new EtcDiscountService(info);
+        actual = service.calculate(price);
+        assertEquals(expected, actual);
     }
 }
