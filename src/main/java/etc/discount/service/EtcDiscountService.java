@@ -1,6 +1,11 @@
 package etc.discount.service;
 
+import etc.discount.Week;
 import etc.discount.model.Driving;
+import etc.discount.state.Daytime;
+import etc.discount.state.Holiday;
+import etc.discount.state.Night;
+import etc.discount.state.Weekday;
 
 import java.time.DayOfWeek;
 
@@ -13,8 +18,7 @@ import static etc.discount.model.Route.LOCAL;
  */
 public class EtcDiscountService implements DiscountService {
 
-    // 走行情報
-    // private Driving info;
+    private Week week = new Week();
 
     @Override
     public long add(long x, long y) {
@@ -38,8 +42,6 @@ public class EtcDiscountService implements DiscountService {
      * @return 割引率
      */
     private double getRate(Driving info) {
-        int enteringHour = info.getEnteringDate().getHour();
-        int leavingHour = info.getLeavingDate().getHour();
         double rate = 0.0;
 
         // 平日朝夕割引
@@ -63,8 +65,8 @@ public class EtcDiscountService implements DiscountService {
      * @return
      */
     private Boolean isWeekday(Driving info) {
-        return  (!this.isHoliday(info) &&
-                (this.isMorning(info) || this.isEvening(info)) &&
+        return  ( info.getTimeMaster().getCalState() instanceof Weekday &&
+                ( info.getTimeMaster().getDayState() instanceof Daytime) &&
                 (info.getRoute() == LOCAL) );
     }
 
@@ -76,36 +78,9 @@ public class EtcDiscountService implements DiscountService {
      * False：平日
      */
     private Boolean isHoliday(Driving info) {
-        DayOfWeek week = info.getEnteringDate().getDayOfWeek();
-        return ((info.getType() == KEI || info.getType() == ORDINARY) &&
-                (week == DayOfWeek.SATURDAY || week == DayOfWeek.SUNDAY) && (info.getRoute()== LOCAL) );
-    }
-
-    /**
-     * 朝時間であるかどうかを返却する
-     *
-     * @return 朝時間であるかどうか
-     */
-    private Boolean isMorning(Driving info) {
-        int enteringHour = info.getEnteringDate().getHour();
-        int leavingHour = info.getLeavingDate().getHour();
-
-        // 平日朝夕割引
-        return ( (6 <= enteringHour && enteringHour < 9) ||
-                 (6 <= leavingHour && leavingHour < 9) );
-    }
-
-    /**
-     * 夕時間であるかどうかを返却する
-     *
-     * @return 夕時間であるかどうか
-     */
-    private Boolean isEvening(Driving info) {
-        int enteringHour = info.getEnteringDate().getHour();
-        int leavingHour = info.getLeavingDate().getHour();
-
-        return ( (17 <= enteringHour && enteringHour < 20) ||
-                (17 <= leavingHour && leavingHour < 20) );
+        return ((week.isApplicable( info.getType() )) &&
+                (info.getTimeMaster().getDayState() instanceof Holiday) &&
+                (info.getRoute()== LOCAL) );
     }
 
     /**
@@ -116,10 +91,7 @@ public class EtcDiscountService implements DiscountService {
      * False：深夜時間帯外
      */
     private Boolean isMidnight(Driving info){
-        int enteringHour = info.getEnteringDate().getHour();
-        int leavingHour = info.getLeavingDate().getHour();
-
-        return ( ( enteringHour < 4) || ( leavingHour < 4) );
+        return ( info.getTimeMaster().getDayState() instanceof Night);
     }
 
     /**
