@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 /**
  * 走行情報クラス
  */
-public class DrivingInformation {
+public class Driving {
 
-    public DrivingInformation(CarModel type,
-                              LocalDateTime enteringDate,
-                              LocalDateTime leavingDate,
-                              String enteringPoint,
-                              String leavingPoint) {
+    public Driving(CarModel type,
+                   LocalDateTime enteringDate,
+                   LocalDateTime leavingDate,
+                   String enteringPoint,
+                   String leavingPoint) {
         this.type = type;
         this.enteringDate = enteringDate;
         this.leavingDate = leavingDate;

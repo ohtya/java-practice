@@ -1,7 +1,6 @@
 package etc.discount.service;
 
-import etc.discount.model.DrivingInformation;
-import etc.discount.model.Route;
+import etc.discount.model.Driving;
 
 import java.time.DayOfWeek;
 
@@ -15,14 +14,13 @@ import static etc.discount.model.Route.LOCAL;
 public class EtcDiscountService implements DiscountService {
 
     // 走行情報
-    private DrivingInformation info;
+    // private Driving info;
 
-    /**
-     * コンストラクタ
-     */
-    public EtcDiscountService(DrivingInformation info) {
-        this.info = info;
+    @Override
+    public long add(long x, long y) {
+        return x + y;
     }
+
 
     /**
      * 料金を計算し、返却する
@@ -30,8 +28,8 @@ public class EtcDiscountService implements DiscountService {
      * @return 料金
      */
     @Override
-    public long calculate(long price) {
-        return (long)(price * (1 - this.getRate()));
+    public long calculate(long price, Driving info) {
+        return (long)(price * (1 - this.getRate(info)));
     }
 
     /**
@@ -39,26 +37,35 @@ public class EtcDiscountService implements DiscountService {
      *
      * @return 割引率
      */
-    private double getRate() {
+    private double getRate(Driving info) {
         int enteringHour = info.getEnteringDate().getHour();
         int leavingHour = info.getLeavingDate().getHour();
         double rate = 0.0;
 
         // 平日朝夕割引
-        if (!this.isHoliday() &&
-            (this.isMorning() || this.isEvening()) &&
-            (this.isLocal() == LOCAL) ) {
+        if (this.isWeekday(info) ) {
             // TODO ポイントによる減算は未実装、固定で50パーセント割引（還元）とする。
             rate = 0.5;
-        } else if ((this.info.getType() == KEI || this.info.getType() == ORDINARY) && // 休日割引
-                 (this.isHoliday()) && (this.isLocal() == LOCAL) ){
+        } else if ( this.isHoliday(info)) { // 休日割引
             rate = 0.3;
-        } else if ( this.isMidnight() ) { // 深夜割引
+        } else if ( this.isMidnight(info) ) { // 深夜割引
             rate = 0.3;
         } else {
             // その他の割引（未実装）
         }
         return rate;
+    }
+
+    /**
+     * 平日の割引対象であるかを返却する。
+     *
+     * @param info
+     * @return
+     */
+    private Boolean isWeekday(Driving info) {
+        return  (!this.isHoliday(info) &&
+                (this.isMorning(info) || this.isEvening(info)) &&
+                (info.getRoute() == LOCAL) );
     }
 
     /**
@@ -68,9 +75,10 @@ public class EtcDiscountService implements DiscountService {
      * True：休日
      * False：平日
      */
-    private Boolean isHoliday() {
+    private Boolean isHoliday(Driving info) {
         DayOfWeek week = info.getEnteringDate().getDayOfWeek();
-        return (week == DayOfWeek.SATURDAY || week == DayOfWeek.SUNDAY);
+        return ((info.getType() == KEI || info.getType() == ORDINARY) &&
+                (week == DayOfWeek.SATURDAY || week == DayOfWeek.SUNDAY) && (info.getRoute()== LOCAL) );
     }
 
     /**
@@ -78,7 +86,7 @@ public class EtcDiscountService implements DiscountService {
      *
      * @return 朝時間であるかどうか
      */
-    private Boolean isMorning() {
+    private Boolean isMorning(Driving info) {
         int enteringHour = info.getEnteringDate().getHour();
         int leavingHour = info.getLeavingDate().getHour();
 
@@ -92,7 +100,7 @@ public class EtcDiscountService implements DiscountService {
      *
      * @return 夕時間であるかどうか
      */
-    private Boolean isEvening() {
+    private Boolean isEvening(Driving info) {
         int enteringHour = info.getEnteringDate().getHour();
         int leavingHour = info.getLeavingDate().getHour();
 
@@ -107,7 +115,7 @@ public class EtcDiscountService implements DiscountService {
      * True：深夜時間帯
      * False：深夜時間帯外
      */
-    private Boolean isMidnight(){
+    private Boolean isMidnight(Driving info){
         int enteringHour = info.getEnteringDate().getHour();
         int leavingHour = info.getLeavingDate().getHour();
 
@@ -115,22 +123,11 @@ public class EtcDiscountService implements DiscountService {
     }
 
     /**
-     * 地方部であるかを判定する。
-     *
-     * @return 地方部であるかどうか
-     */
-    private Route isLocal() {
-        // TODO 位置情報から都市部か地方部を返却する
-        // 現状はわからないので地方部を返却する。
-        return LOCAL;
-    }
-
-    /**
      * マイレージサービスに登録しているかどうかを判定する
      *
      * @return マイレージサービス登録しているかどうか
      */
-    private Boolean isMileage() {
+    private Boolean isMileage(Driving info) {
         /* TODO マイレージサービスをDrivingInformationに実装？
             別クラスで実装でDrivingInfoに持たせるとか検討する */
         return true;

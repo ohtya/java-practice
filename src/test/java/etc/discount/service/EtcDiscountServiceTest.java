@@ -1,7 +1,6 @@
 package etc.discount.service;
 
-import etc.discount.model.CarModel;
-import etc.discount.model.DrivingInformation;
+import etc.discount.model.Driving;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,6 +24,15 @@ class EtcDiscountServiceTest {
 
     }
 
+    @Test
+    void add() {
+        final var x = 1;
+        final var y = 2;
+        final var expected = x + y;
+        final var actual = service.add(x, y);
+        assertEquals(expected, actual);
+    }
+
     /**
      * 平日朝夕割引
      */
@@ -36,7 +44,7 @@ class EtcDiscountServiceTest {
         // 平日割引 朝 入場時刻
         LocalDateTime enterDt = LocalDateTime.of(2020,2,19,6,00);
         LocalDateTime leavingDt = LocalDateTime.of(2020,2,19, 9,00);
-        DrivingInformation info = new DrivingInformation(ORDINARY, enterDt,leavingDt,"","");
+        Driving info = new Driving(ORDINARY, enterDt,leavingDt,"","");
         service = new EtcDiscountService(info);
         var actual = service.calculate(price);
         assertEquals(expected, actual);
@@ -44,7 +52,7 @@ class EtcDiscountServiceTest {
         // 平日割引 朝　退場時刻
         enterDt = LocalDateTime.of(2020,2,19,5,59);
         leavingDt = LocalDateTime.of(2020,2,19,8,59);
-        info = new DrivingInformation(ORDINARY, enterDt,leavingDt,"","");
+        info = new Driving(ORDINARY, enterDt,leavingDt,"","");
         service = new EtcDiscountService(info);
         actual = service.calculate(price);
         assertEquals(expected, actual);
@@ -52,7 +60,7 @@ class EtcDiscountServiceTest {
         // 平日割引 夕　入場時刻
         enterDt = LocalDateTime.of(2020,2,19,17,00);
         leavingDt = LocalDateTime.of(2020,2,19,20,00);
-        info = new DrivingInformation(ORDINARY, enterDt,leavingDt,"","");
+        info = new Driving(ORDINARY, enterDt,leavingDt,"","");
         service = new EtcDiscountService(info);
         actual = service.calculate(price);
         assertEquals(expected, actual);
@@ -60,7 +68,7 @@ class EtcDiscountServiceTest {
         // 平日割引 夕　退場時刻
         enterDt = LocalDateTime.of(2020,2,19,16,59);
         leavingDt = LocalDateTime.of(2020,2,19,19,59);
-        info = new DrivingInformation(ORDINARY, enterDt,leavingDt,"","");
+        info = new Driving(ORDINARY, enterDt,leavingDt,"","");
         service = new EtcDiscountService(info);
         actual = service.calculate(price);
         assertEquals(expected, actual);
@@ -77,7 +85,7 @@ class EtcDiscountServiceTest {
         // 休日割引
         LocalDateTime enterDt = LocalDateTime.of(2020,2,16,6,00);
         LocalDateTime leavingDt = LocalDateTime.of(2020,2,16, 9,00);
-        DrivingInformation info = new DrivingInformation(ORDINARY, enterDt,leavingDt,"","");
+        Driving info = new Driving(ORDINARY, enterDt,leavingDt,"","");
         service = new EtcDiscountService(info);
         var actual = service.calculate(price);
         assertEquals(expected, actual);
@@ -99,7 +107,7 @@ class EtcDiscountServiceTest {
         // 深夜割引　入場時刻
         LocalDateTime enterDt = LocalDateTime.of(2020, 2, 19, 0, 00);
         LocalDateTime leavingDt = LocalDateTime.of(2020, 2, 19, 4, 00);
-        DrivingInformation info = new DrivingInformation(ORDINARY, enterDt, leavingDt, "", "");
+        Driving info = new Driving(ORDINARY, enterDt, leavingDt, "", "");
         service = new EtcDiscountService(info);
         var actual = service.calculate(price);
         assertEquals(expected, actual);
@@ -107,7 +115,7 @@ class EtcDiscountServiceTest {
         // 深夜割引　退場時刻
         enterDt = LocalDateTime.of(2020, 2, 18, 23, 59);
         leavingDt = LocalDateTime.of(2020, 2, 19, 3, 59);
-        info = new DrivingInformation(ORDINARY, enterDt, leavingDt, "", "");
+        info = new Driving(ORDINARY, enterDt, leavingDt, "", "");
         service = new EtcDiscountService(info);
         actual = service.calculate(price);
         assertEquals(expected, actual);
@@ -124,7 +132,7 @@ class EtcDiscountServiceTest {
         // 休日割引
         LocalDateTime enterDt = LocalDateTime.of(2020,2,18,12,00);
         LocalDateTime leavingDt = LocalDateTime.of(2020,2,18, 13,00);
-        DrivingInformation info = new DrivingInformation(ORDINARY, enterDt,leavingDt,"","");
+        Driving info = new Driving(ORDINARY, enterDt,leavingDt,"","");
         service = new EtcDiscountService(info);
         var actual = service.calculate(price);
         assertEquals(expected, actual);
