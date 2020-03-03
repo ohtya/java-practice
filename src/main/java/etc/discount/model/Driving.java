@@ -1,5 +1,10 @@
 package etc.discount.model;
 
+import etc.discount.state.Night;
+import etc.discount.state.TimeMaster;
+import etc.discount.state.rule.DayState;
+
+import java.sql.Time;
 import java.time.LocalDateTime;
 
 /**
@@ -13,10 +18,9 @@ public class Driving {
                    String enteringPoint,
                    String leavingPoint) {
         this.type = type;
-        this.enteringDate = enteringDate;
-        this.leavingDate = leavingDate;
         this.enteringPoint = enteringPoint;
         this.leavingPoint = leavingPoint;
+        this.timeMaster = new TimeMaster(enteringDate, leavingDate);
     }
 
     // 車種
@@ -24,25 +28,13 @@ public class Driving {
 
     private Route route;
 
-    // 入場時刻
-    private LocalDateTime enteringDate;
-
-    // 退場時刻
-    private LocalDateTime leavingDate;
-
     // 入場位置
     private String enteringPoint;
 
     // 退場位置
     private String leavingPoint;
 
-    public LocalDateTime getEnteringDate() {
-        return enteringDate;
-    }
-
-    public LocalDateTime getLeavingDate() {
-        return leavingDate;
-    }
+    private TimeMaster timeMaster;
 
     public String getEnteringPoint() {
         return enteringPoint;
@@ -50,14 +42,6 @@ public class Driving {
 
     public String getLeavingPoint() {
         return leavingPoint;
-    }
-
-    public void setEnteringDate(LocalDateTime enteringDate) {
-        this.enteringDate = enteringDate;
-    }
-
-    public void setLeavingDate(LocalDateTime leavingDate) {
-        this.leavingDate = leavingDate;
     }
 
     public void setEnteringPoint(String enteringPoint) {
@@ -82,5 +66,13 @@ public class Driving {
 
     public void setRoute(Route route) {
         this.route = route;
+    }
+
+    public TimeMaster getTimeMaster() {
+        return timeMaster;
+    }
+
+    public void setTimeMaster(TimeMaster timeMaster) {
+        this.timeMaster = timeMaster;
     }
 }

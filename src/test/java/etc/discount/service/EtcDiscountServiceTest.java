@@ -45,32 +45,33 @@ class EtcDiscountServiceTest {
         LocalDateTime enterDt = LocalDateTime.of(2020,2,19,6,00);
         LocalDateTime leavingDt = LocalDateTime.of(2020,2,19, 9,00);
         Driving info = new Driving(ORDINARY, enterDt,leavingDt,"","");
-        service = new EtcDiscountService(info);
-        var actual = service.calculate(price);
+        service = new EtcDiscountService();
+        var actual = service.calculate(price, info);
+        System.out.println(actual);
         assertEquals(expected, actual);
 
         // 平日割引 朝　退場時刻
         enterDt = LocalDateTime.of(2020,2,19,5,59);
         leavingDt = LocalDateTime.of(2020,2,19,8,59);
         info = new Driving(ORDINARY, enterDt,leavingDt,"","");
-        service = new EtcDiscountService(info);
-        actual = service.calculate(price);
+        service = new EtcDiscountService();
+        actual = service.calculate(price, info);
         assertEquals(expected, actual);
 
         // 平日割引 夕　入場時刻
         enterDt = LocalDateTime.of(2020,2,19,17,00);
         leavingDt = LocalDateTime.of(2020,2,19,20,00);
         info = new Driving(ORDINARY, enterDt,leavingDt,"","");
-        service = new EtcDiscountService(info);
-        actual = service.calculate(price);
+        service = new EtcDiscountService();
+        actual = service.calculate(price, info);
         assertEquals(expected, actual);
 
         // 平日割引 夕　退場時刻
         enterDt = LocalDateTime.of(2020,2,19,16,59);
         leavingDt = LocalDateTime.of(2020,2,19,19,59);
         info = new Driving(ORDINARY, enterDt,leavingDt,"","");
-        service = new EtcDiscountService(info);
-        actual = service.calculate(price);
+        service = new EtcDiscountService();
+        actual = service.calculate(price, info);
         assertEquals(expected, actual);
     }
 
@@ -86,13 +87,13 @@ class EtcDiscountServiceTest {
         LocalDateTime enterDt = LocalDateTime.of(2020,2,16,6,00);
         LocalDateTime leavingDt = LocalDateTime.of(2020,2,16, 9,00);
         Driving info = new Driving(ORDINARY, enterDt,leavingDt,"","");
-        service = new EtcDiscountService(info);
-        var actual = service.calculate(price);
+        service = new EtcDiscountService();
+        var actual = service.calculate(price, info);
         assertEquals(expected, actual);
 
         info.setType(KEI);
-        service = new EtcDiscountService(info);
-        actual = service.calculate(price);
+        service = new EtcDiscountService();
+        actual = service.calculate(price, info);
         assertEquals(expected, actual);
     }
 
@@ -108,16 +109,16 @@ class EtcDiscountServiceTest {
         LocalDateTime enterDt = LocalDateTime.of(2020, 2, 19, 0, 00);
         LocalDateTime leavingDt = LocalDateTime.of(2020, 2, 19, 4, 00);
         Driving info = new Driving(ORDINARY, enterDt, leavingDt, "", "");
-        service = new EtcDiscountService(info);
-        var actual = service.calculate(price);
+        service = new EtcDiscountService();
+        var actual = service.calculate(price, info);
         assertEquals(expected, actual);
 
         // 深夜割引　退場時刻
         enterDt = LocalDateTime.of(2020, 2, 18, 23, 59);
         leavingDt = LocalDateTime.of(2020, 2, 19, 3, 59);
         info = new Driving(ORDINARY, enterDt, leavingDt, "", "");
-        service = new EtcDiscountService(info);
-        actual = service.calculate(price);
+        service = new EtcDiscountService();
+        actual = service.calculate(price, info);
         assertEquals(expected, actual);
     }
 
@@ -133,13 +134,13 @@ class EtcDiscountServiceTest {
         LocalDateTime enterDt = LocalDateTime.of(2020,2,18,12,00);
         LocalDateTime leavingDt = LocalDateTime.of(2020,2,18, 13,00);
         Driving info = new Driving(ORDINARY, enterDt,leavingDt,"","");
-        service = new EtcDiscountService(info);
-        var actual = service.calculate(price);
+        service = new EtcDiscountService();
+        var actual = service.calculate(price, info);
         assertEquals(expected, actual);
 
         info.setType(KEI);
-        service = new EtcDiscountService(info);
-        actual = service.calculate(price);
+        service = new EtcDiscountService();
+        actual = service.calculate(price, info);
         assertEquals(expected, actual);
     }
 }
