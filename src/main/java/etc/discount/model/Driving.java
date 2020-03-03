@@ -22,6 +22,8 @@ public class DrivingInformation {
     // 車種
     private CarModel type;
 
+    private Route route;
+
     // 入場時刻
     private LocalDateTime enteringDate;
 
@@ -72,5 +74,13 @@ public class DrivingInformation {
 
     public void setType(CarModel type) {
         this.type = type;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
     }
 }
