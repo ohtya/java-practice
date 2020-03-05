@@ -1,7 +1,7 @@
 package etc.discount.model;
 
 /**
- * 車種
+ * 車種(料金車種区分)
  */
 public enum CarModel {
     /**
