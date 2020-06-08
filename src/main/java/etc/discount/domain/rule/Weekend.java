@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class Weekend implements DiscountRule {
 
     protected static final List<CarModel> APPLICABLE_CAR_MODEL = Arrays.stream(CarModel.values()).filter(carModel -> carModel.equals(CarModel.KEI) || carModel.equals(CarModel.ORDINARY)).collect(Collectors.toList());
-    private Holiday holiday;
+    private Holiday holiday = new Holiday();
 
     /**
      * 入り口料金所または出口料金所を休日に通過した場合に適用可能です
