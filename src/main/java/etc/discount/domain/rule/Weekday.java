@@ -9,7 +9,7 @@ import etc.discount.model.Drive;
  * <p>
  * 平日とは、月曜日から金曜日までを指します
  * 但し、祝日は除外します
- * FIXME: 作成してください
+ * FIXME: 作成してください → 通知テスト
  */
 public class Weekday implements DiscountRule {
 
