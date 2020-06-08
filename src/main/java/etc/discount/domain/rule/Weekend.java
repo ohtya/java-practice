@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * - 日曜日
  * - 祝日
  * - 三が日(毎年1月２日、3日)
- * FIXME: 祝日と三が日を休日の対象にする
+ * FIXME: 祝日と三が日を休日の対象にする → 通知変更テスト
  */
 public class Weekend implements DiscountRule {
 
