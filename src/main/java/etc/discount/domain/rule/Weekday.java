@@ -74,6 +74,11 @@ public class Weekday implements DiscountRule {
      */
     @Override
     public long discountRate(final Drive drive) {
+        if (10 <= drive.getCount()) {
+            return 50;
+        } else if (5 <= drive.getCount()) {
+            return 30;
+        }
         return 0;
     }
 
