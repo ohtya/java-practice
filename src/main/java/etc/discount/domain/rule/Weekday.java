@@ -1,7 +1,12 @@
 package etc.discount.domain.rule;
 
+import etc.discount.Holiday;
 import etc.discount.domain.DiscountRule;
 import etc.discount.model.Drive;
+import etc.discount.model.Route;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 平日朝夕割引
@@ -27,7 +32,37 @@ public class Weekday implements DiscountRule {
      */
     @Override
     public boolean isApplicable(final Drive drive) {
-        return false;
+
+        // TODO: wiki に設定をまとめる
+        // 設定 > show quick ～
+        // 方針: とりあえず作る
+
+        // 休日を new する
+        Holiday holiday = new Holiday();
+
+        // 休日の場合は後の処理を行わない
+        if (holiday.isWeekend(drive.getAdmissionAt()) && holiday.isWeekend(drive.getExitAt())) {
+            return false;
+        }
+
+        // 入口が含まれていて良いし、出口が含まれていても良い
+        // FIXME: 朝夕まとめて考えないとうまくいかない？
+        // 入場日時と退場日時が朝夕に含まれていない場合は後の処理を行わない
+        if (!isIn(drive.getAdmissionAt()) && !isIn(drive.getExitAt())) {
+            return false;
+        }
+
+        // 利用回数が5回未満の場合は後の処理を行わない
+        if (drive.getCount() < 5) {
+            return false;
+        }
+
+        // 対象区間
+        if (!Objects.equals(Route.LOCAL, drive.getRoute())) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -40,5 +75,13 @@ public class Weekday implements DiscountRule {
     @Override
     public long discountRate(final Drive drive) {
         return 0;
+    }
+
+    // TODO: Drive にもたせたほうが良いのか？
+    // 朝夕に含まれるか
+    private boolean isIn(final LocalDateTime localDateTime) {
+        // 朝 -> 6時から9時まで -> 06:00以上 - 09:00以下
+        // 夕 -> 17時から20時まで -> 17:00以上 - 20:00以下
+        return 6 <= localDateTime.getHour() && localDateTime.getHour() <= 9 || 17 <= localDateTime.getHour() && localDateTime.getHour() <= 20;
     }
 }
