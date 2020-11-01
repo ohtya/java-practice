@@ -14,9 +14,8 @@ public class Visitor {
 
     /**
      * 学生
-     * TODO Enumにする
      */
-    int visitorType;
+    VisitorType visitorType;
 
     /**
      * 障碍者
