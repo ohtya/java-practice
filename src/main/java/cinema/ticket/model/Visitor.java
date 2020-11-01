@@ -1,4 +1,4 @@
-package etc.discount.model;
+package cinema.ticket.model;
 
 import lombok.Builder;
 import lombok.Value;
