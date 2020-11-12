@@ -5,16 +5,24 @@ import cinema.ticket.model.Visitor;
 import cinema.ticket.model.VisitorType;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 大・専門学生
  */
 public class CollegeVocationalStudent implements DiscountRule {
 
+    // 大・専門学生の配列
+    protected static final List<VisitorType> COLLEGE_VOCATIONAL_SCHOOL = Arrays
+            .stream(VisitorType.values())
+            .filter(visitorType -> visitorType.equals(VisitorType.COLLEGE) || visitorType.equals(VisitorType.VOCATIONAL))
+            .collect(Collectors.toList());
+
     @Override
     public boolean isApplicable(Visitor visitor) {
-        return (visitor.getVisitorType() == VisitorType.COLLEGE ||
-            visitor.getVisitorType() == VisitorType.VOCATIONAL);
+        return COLLEGE_VOCATIONAL_SCHOOL.contains(visitor.getVisitorType());
     }
 
     @Override
