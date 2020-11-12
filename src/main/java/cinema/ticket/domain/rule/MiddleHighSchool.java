@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 public class MiddleHighSchool implements DiscountRule {
 
     // 中・高校生の配列
-    protected static final List<VisitorType> HIGH_PRIMARY_SCHOOL = Arrays
+    protected static final List<VisitorType> TARGET_VISITOR_TYPE = Arrays
             .stream(VisitorType.values())
             .filter(visitorType -> visitorType.equals(VisitorType.JUNIOR_HIGH_SCHOOL) || visitorType.equals(VisitorType.HIGH_SCHOOL))
             .collect(Collectors.toList());
 
     @Override
     public boolean isApplicable(Visitor visitor) {
-        return (HIGH_PRIMARY_SCHOOL.contains(visitor.getVisitorType()));
+        return (TARGET_VISITOR_TYPE.contains(visitor.getVisitorType()));
     }
 
     @Override

@@ -15,14 +15,14 @@ import java.util.stream.Collectors;
 public class CollegeVocationalStudent implements DiscountRule {
 
     // 大・専門学生の配列
-    protected static final List<VisitorType> COLLEGE_VOCATIONAL_SCHOOL = Arrays
+    protected static final List<VisitorType> TARGET_VISITOR_TYPE = Arrays
             .stream(VisitorType.values())
             .filter(visitorType -> visitorType.equals(VisitorType.COLLEGE) || visitorType.equals(VisitorType.VOCATIONAL))
             .collect(Collectors.toList());
 
     @Override
     public boolean isApplicable(Visitor visitor) {
-        return COLLEGE_VOCATIONAL_SCHOOL.contains(visitor.getVisitorType());
+        return TARGET_VISITOR_TYPE.contains(visitor.getVisitorType());
     }
 
     @Override
