@@ -26,7 +26,7 @@ public class CinemaCitizen implements DiscountRule {
      * 該当するかどうか
      */
     public boolean isApplicable(final Visitor visitor) {
-        // 60歳以上は割引が変わる
+        // シニアは割引が変わる
         is_senior = (60 <= visitor.getAge());
         return (visitor.isKaiin());
     }
@@ -37,12 +37,12 @@ public class CinemaCitizen implements DiscountRule {
      * @return チケット料金
      */
     public long ticketFee() {
-        // 会員かつ60歳以上は1,000円固定
+        // 会員かつシニアは値段が一律
         if (is_senior) {
             return 1000;
         }
 
-        // 60歳以上でない場合は現在時刻をもとに料金を決定する
+        // シニアでない場合は現在時刻をもとに料金を決定する
         final var time = LocalDateTime.now();
 
         // TODO : 祝日対応
@@ -56,7 +56,7 @@ public class CinemaCitizen implements DiscountRule {
                 return (time.getHour() < 20) ? 1300 : 1000;
             }
         } else {
-            // 平日は1,000円固定
+            // 平日は値段が一律
             return 1000;
         }
     }

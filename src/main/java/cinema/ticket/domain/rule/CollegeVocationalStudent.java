@@ -39,7 +39,6 @@ public class CollegeVocationalStudent implements DiscountRule {
         // 学生(大・専門)は平日・土日祝値段は同じなため、時間帯のみの判定を行う
         // TODO 祝日考慮(ここでは不要だが別個所で必要)
         //      シネマシティズン(60歳以上)は全部1000円なのでまとめて返却するようにする
-
         return (time.getHour() < 20) ? 1500 : 1300 ;
     }
 }

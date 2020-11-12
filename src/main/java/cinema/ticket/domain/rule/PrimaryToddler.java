@@ -25,7 +25,7 @@ public class PrimaryToddler implements DiscountRule {
 
     @Override
     public long ticketFee() {
-        // 小学生・幼児は1,000円固定
+        // 小学生・幼児値段は一律
         return 1000;
     }
 }

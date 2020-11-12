@@ -26,7 +26,7 @@ public class MiddleHighSchool implements DiscountRule {
 
     @Override
     public long ticketFee() {
-        // 中高生は1,000円固定
+        // 中高生の値段は一律
         return 1000;
     }
 }
