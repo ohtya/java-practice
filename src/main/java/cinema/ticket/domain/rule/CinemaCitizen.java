@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class CinemaCitizen implements DiscountRule {
 
     // 60歳以上であるか
-    private boolean is_senior;
+    private boolean isSenior;
 
     protected static final List<DayOfWeek> WEEKEND_DAY_OF_WEEK = Arrays
             .stream(DayOfWeek.values())
@@ -27,7 +27,7 @@ public class CinemaCitizen implements DiscountRule {
      */
     public boolean isApplicable(final Visitor visitor) {
         // シニアは割引が変わる
-        is_senior = (60 <= visitor.getAge());
+        isSenior = (60 <= visitor.getAge());
         return (visitor.isKaiin());
     }
 
@@ -38,7 +38,7 @@ public class CinemaCitizen implements DiscountRule {
      */
     public long ticketFee() {
         // 会員かつシニアは値段が一律
-        if (is_senior) {
+        if (isSenior) {
             return 1000;
         }
 

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class General implements DiscountRule {
 
     // 70歳以上であるか
-    private boolean is_senior;
+    private boolean isSenior;
 
     protected static final List<DayOfWeek> WEEKEND_DAY_OF_WEEK = Arrays
             .stream(DayOfWeek.values())
@@ -37,14 +37,14 @@ public class General implements DiscountRule {
      * @return
      */
     public boolean isApplicable(final Visitor visitor) {
-        is_senior = (70 <= visitor.getAge());
+        isSenior = (70 <= visitor.getAge());
         return TARGET_VISITOR_TYPE.contains(visitor.getVisitorType());
     }
 
     @Override
     public long ticketFee() {
         // シニアは値段は一律
-        if (is_senior) {
+        if (isSenior) {
             return 1100;
         }
 
