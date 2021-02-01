@@ -26,4 +26,9 @@ public class Visitor {
      * 会員かどうか
      */
     boolean isKaiin;
+
+    /**
+     * シニアであるか
+     */
+    boolean isSenior;
 }

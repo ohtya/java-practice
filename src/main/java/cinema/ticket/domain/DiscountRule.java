@@ -2,6 +2,8 @@ package cinema.ticket.domain;
 
 import cinema.ticket.model.Visitor;
 
+import java.time.LocalDateTime;
+
 /**
  * 割引ルール
  *
@@ -21,7 +23,23 @@ public interface DiscountRule {
      * チケット料金返却
      *
      * @return チケット料金
+     * @param nowDateTime
      */
-    long ticketFee();
+    long discountRate(final LocalDateTime nowDateTime);
+
+    // 平日の割引額
+    long getWeekdayDiscount();
+
+    // 平日レイトの割引額
+    long getWeekdayLateDiscount();
+
+    // 休日の割引額
+    long getHolidayDiscount();
+
+    // 休日レイトの割引額
+    long getHolidayLateDiscount();
+
+    // 映画の日の割引額
+    long getMovieDayDiscount();
 
 }

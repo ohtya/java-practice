@@ -4,6 +4,7 @@ import cinema.ticket.domain.DiscountRule;
 import cinema.ticket.domain.rule.*;
 import cinema.ticket.model.Visitor;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class TicketDiscountService implements DiscountService{
         return ticketDiscountRules
                 .stream()
                 .filter(rule -> rule.isApplicable(visitor))
-                .map(rule -> rule.ticketFee())
+                .map(rule -> rule.discountRate(LocalDateTime.now()))
                 .min(Comparator.naturalOrder())
                 .get();
     }

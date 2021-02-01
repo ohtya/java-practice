@@ -4,6 +4,7 @@ import cinema.ticket.domain.DiscountRule;
 import cinema.ticket.model.Visitor;
 import cinema.ticket.model.VisitorType;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class PrimaryToddler implements DiscountRule {
     }
 
     @Override
-    public long ticketFee() {
+    public long discountRate(LocalDateTime nowDateTime) {
         // 小学生・幼児値段は一律
         return 1000;
     }

@@ -42,7 +42,7 @@ public class General implements DiscountRule {
     }
 
     @Override
-    public long ticketFee() {
+    public long discountRate(LocalDateTime nowDateTime) {
         // シニアは値段は一律
         if (is_senior) {
             return 1100;

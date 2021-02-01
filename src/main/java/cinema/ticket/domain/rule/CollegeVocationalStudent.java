@@ -26,7 +26,7 @@ public class CollegeVocationalStudent implements DiscountRule {
     }
 
     @Override
-    public long ticketFee() {
+    public long discountRate(LocalDateTime nowDateTime) {
         // 現在時刻取得
         final var time = LocalDateTime.now();
 

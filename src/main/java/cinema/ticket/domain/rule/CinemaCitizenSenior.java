@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * シネマシティズン料金算出
+ * シネマシティズン(シニア)料金算出
  */
-public class CinemaCitizen implements DiscountRule {
+public class CinemaCitizenSenior implements DiscountRule {
 
     protected static final List<DayOfWeek> WEEKEND_DAY_OF_WEEK = Arrays
             .stream(DayOfWeek.values())
@@ -23,7 +23,7 @@ public class CinemaCitizen implements DiscountRule {
      * 該当するかどうか
      */
     public boolean isApplicable(final Visitor visitor) {
-        return (visitor.isKaiin() && !visitor.isSenior());
+        return (visitor.isKaiin() && visitor.isSenior());
     }
 
     /**
@@ -47,30 +47,5 @@ public class CinemaCitizen implements DiscountRule {
             // 平日は値段が一律
             return 1000;
         }
-    }
-
-    @Override
-    public long getWeekdayDiscount() {
-        return 800;
-    }
-
-    @Override
-    public long getWeekdayLateDiscount() {
-        return 800;
-    }
-
-    @Override
-    public long getHolidayDiscount() {
-        return 500;
-    }
-
-    @Override
-    public long getHolidayLateDiscount() {
-        return 800;
-    }
-
-    @Override
-    public long getMovieDayDiscount() {
-        return 700;
     }
 }
