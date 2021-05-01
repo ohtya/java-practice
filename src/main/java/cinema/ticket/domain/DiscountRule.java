@@ -2,7 +2,11 @@ package cinema.ticket.domain;
 
 import cinema.ticket.model.Visitor;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 割引ルール
@@ -11,6 +15,11 @@ import java.time.LocalDateTime;
  * -
  */
 public interface DiscountRule {
+
+    static final List<DayOfWeek> WEEKEND_DAY_OF_WEEK = Arrays
+            .stream(DayOfWeek.values())
+            .filter(dayOfWeek -> dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY))
+            .collect(Collectors.toList());
 
     /**
      * 適用可能か？
@@ -25,21 +34,5 @@ public interface DiscountRule {
      * @return チケット料金
      * @param nowDateTime
      */
-    long discountRate(final LocalDateTime nowDateTime);
-
-    // 平日の割引額
-    long getWeekdayDiscount();
-
-    // 平日レイトの割引額
-    long getWeekdayLateDiscount();
-
-    // 休日の割引額
-    long getHolidayDiscount();
-
-    // 休日レイトの割引額
-    long getHolidayLateDiscount();
-
-    // 映画の日の割引額
-    long getMovieDayDiscount();
-
+    long discountRate(final LocalDateTime nowDateTime,Visitor visitor);
 }

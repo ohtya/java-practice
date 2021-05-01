@@ -4,7 +4,6 @@ import cinema.ticket.domain.DiscountRule;
 import cinema.ticket.model.Visitor;
 import cinema.ticket.model.VisitorType;
 
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -18,18 +17,10 @@ import java.util.stream.Collectors;
  */
 public class General implements DiscountRule {
 
-    // 70歳以上であるか
-    private boolean isSenior;
-
-    protected static final List<DayOfWeek> WEEKEND_DAY_OF_WEEK = Arrays
-            .stream(DayOfWeek.values())
-            .filter(dayOfWeek -> dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY))
-            .collect(Collectors.toList());
-
     // 一般・シニア
     protected static final List<VisitorType> TARGET_VISITOR_TYPE = Arrays
             .stream(VisitorType.values())
-            .filter(visitorType -> visitorType.equals(VisitorType.GENERAL) || visitorType.equals(VisitorType.SENIOR))
+            .filter(visitorType -> visitorType.equals(VisitorType.GENERAL))
             .collect(Collectors.toList());
     /**
      * 適応可能であるかどうか
@@ -37,24 +28,25 @@ public class General implements DiscountRule {
      * @return
      */
     public boolean isApplicable(final Visitor visitor) {
-        isSenior = (70 <= visitor.getAge());
         return TARGET_VISITOR_TYPE.contains(visitor.getVisitorType());
     }
 
     @Override
-    public long discountRate(LocalDateTime nowDateTime) {
-        // シニアは値段は一律
-        if (isSenior) {
+    public long discountRate(LocalDateTime nowDateTime, Visitor visitor) {
+        // 一般の値段決定
+        // 映画の日
+        if (nowDateTime.getDayOfMonth() == 1) {
             return 1100;
         }
 
-        // 一般の値段決定
-        final var time = LocalDateTime.now();
-        // 映画の日
-        if (time.getDayOfMonth() == 1) {
-            return 1100;
+        // 休日であるか
+        // TODO: 障碍者の実装が無いことに気づいた
+        if (WEEKEND_DAY_OF_WEEK.contains(nowDateTime.getDayOfWeek())) {
+            // レイトショーであるかどうか
+            return (nowDateTime.getHour() < 20) ? 1800 : 1300;
+        } else {
+            // 平日の場合
+            return (nowDateTime.getHour() < 20) ? 1800 : 1300;
         }
-        // 一般はレイトかそうでないかのみで金額に差分が生じる
-        return (time.getHour() < 20) ? 1800 : 1300;
     }
 }
