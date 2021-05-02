@@ -28,7 +28,12 @@ public class Visitor {
     boolean isKaiin;
 
     /**
-     * シニアであるか
+     * シニアか
+     *
+     * @return true: シニアである, false: シニアではない
      */
-    boolean isSenior;
+    public boolean isSenior() {
+        // 60歳以上の方をシニアとして扱います
+        return 60 <= age;
+    }
 }
