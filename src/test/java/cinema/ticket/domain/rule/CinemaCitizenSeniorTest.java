@@ -16,15 +16,15 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * {@link CinemaCitizen} unit test.
+ * {@link CinemaCitizenSenior} unit test.
  */
-class CinemaCitizenTest {
+class CinemaCitizenSeniorTest {
 
     private DiscountRule rule;
 
     @BeforeEach
     void setUp() {
-        rule = new CinemaCitizen();
+        rule = new CinemaCitizenSenior();
     }
 
     @AfterEach
@@ -32,46 +32,47 @@ class CinemaCitizenTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(CinemaCitizenIsApplicableArgumentsProvider.class)
+    @ArgumentsSource(CinemaCitizenSeniorIsApplicableArgumentsProvider.class)
     void isApplicable(final Visitor visitor, final boolean expected) {
         final var actual = rule.isApplicable(visitor);
         assertEquals(expected, actual);
     }
 
     @ParameterizedTest
-    @ArgumentsSource(CinemaCitizenDiscountRateArgumentsProvider.class)
-    void discountRate(final LocalDateTime now, final long expected) {
+    @ArgumentsSource(CinemaCitizenSeniorDiscountRuleArgumentsProvider.class)
+    void isApplicable(final LocalDateTime now, final long expected) {
         final var visitor = Visitor.builder()
                 .isKaiin(true)
-                .age(59)
+                .age(60)
                 .build();
         final var actual = rule.discountRate(now, visitor);
         assertEquals(expected, actual);
     }
 
-    static class CinemaCitizenIsApplicableArgumentsProvider implements ArgumentsProvider {
+    private static class CinemaCitizenSeniorIsApplicableArgumentsProvider implements ArgumentsProvider {
 
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+
             return Stream.of(
-                    // シネマシティズン会員である
+                    // シネマシティズン会員(シニア)である
+                    Arguments.of(
+                            Visitor.builder()
+                                    .isKaiin(true)
+                                    .age(60)
+                                    .build(),
+                            true),
+                    // シネマシティズン会員(シニア)ではない
                     Arguments.of(
                             Visitor.builder()
                                     .isKaiin(true)
                                     .age(59)
                                     .build(),
-                            true),
+                            false),
                     // シネマシティズン会員ではない
                     Arguments.of(
                             Visitor.builder()
                                     .isKaiin(false)
-                                    .age(59)
-                                    .build(),
-                            false),
-                    // シネマシティズン会員であるが、シネマシティズンシニア扱いとする
-                    Arguments.of(
-                            Visitor.builder()
-                                    .isKaiin(true)
                                     .age(60)
                                     .build(),
                             false)
@@ -79,7 +80,7 @@ class CinemaCitizenTest {
         }
     }
 
-    static class CinemaCitizenDiscountRateArgumentsProvider implements ArgumentsProvider {
+    private static class CinemaCitizenSeniorDiscountRuleArgumentsProvider implements ArgumentsProvider {
 
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
@@ -95,7 +96,7 @@ class CinemaCitizenTest {
                     // 土 20:00 まで
                     Arguments.of(
                             LocalDateTime.of(2021, 4, 24, 19, 59),
-                            1300),
+                            1000),
                     // 土 20:00 以降
                     Arguments.of(
                             LocalDateTime.of(2021, 4, 24, 20, 0),
@@ -103,7 +104,7 @@ class CinemaCitizenTest {
                     // 日 20:00 まで
                     Arguments.of(
                             LocalDateTime.of(2021, 5, 2, 19, 59),
-                            1300),
+                            1000),
                     // 日 20:00 以降
                     Arguments.of(
                             LocalDateTime.of(2021, 5, 2, 20, 0),
@@ -112,7 +113,7 @@ class CinemaCitizenTest {
 //                // 祝日 20:00 まで
 //                Arguments.of(
 //                        LocalDateTime.of(2021, 5, 3, 19, 59),
-//                        1300),
+//                        1000),
 //                // 祝日 20:00 以降
 //                Arguments.of(
 //                        LocalDateTime.of(2021, 5, 3, 20, 0),
@@ -120,10 +121,10 @@ class CinemaCitizenTest {
                     // 映画の日(毎月1日)
                     Arguments.of(
                             LocalDateTime.of(2021, 5, 1, 0, 0),
-                            1100),
+                            1000),
                     Arguments.of(
                             LocalDateTime.of(2021, 5, 1, 19, 59),
-                            1100),
+                            1000),
                     // 映画の日(毎月1日) でもより安い料金に一致する場合はそちらを優先
                     Arguments.of(
                             LocalDateTime.of(2021, 5, 1, 20, 0),

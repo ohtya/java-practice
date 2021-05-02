@@ -4,6 +4,15 @@ package cinema.ticket.model;
  * 訪問者区分
  */
 public enum VisitorType {
+
+    /**
+     * シネマシティズン
+     */
+    CINEMA_CITIZEN,
+    /**
+     * シネマシティズン(シニア)
+     */
+    CINEMA_CITIZEN_SENIOR,
     /**
      * 一般
      */
@@ -35,5 +44,13 @@ public enum VisitorType {
     /**
      * 幼児
      */
-    TODDLER
+    TODDLER,
+    /**
+     * 障害者
+     */
+    HANDICAPPED,
+    /**
+     * 乳児
+     */
+    BABY
 }
