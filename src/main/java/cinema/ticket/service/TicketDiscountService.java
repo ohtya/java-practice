@@ -26,7 +26,7 @@ public class TicketDiscountService implements DiscountService{
         return ticketDiscountRules
                 .stream()
                 .filter(rule -> rule.isApplicable(visitor))
-                .map(rule -> rule.discountRate(LocalDateTime.now()))
+                .map(rule -> rule.discountRate(LocalDateTime.now(),visitor))
                 .min(Comparator.naturalOrder())
                 .get();
     }
