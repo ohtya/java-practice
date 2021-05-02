@@ -4,6 +4,7 @@ import cinema.ticket.domain.DiscountRule;
 import cinema.ticket.model.Visitor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
  * シネマシティズン料金算出<br>
@@ -30,19 +31,21 @@ public class CinemaCitizen implements DiscountRule {
 
     @Override
     public long discountRate(LocalDateTime nowDateTime, Visitor visitor) {
-        // 映画の日
+        var priceList = new ArrayList<Long>();
+
         if (nowDateTime.getDayOfMonth() == 1) {
-            return 1100;
+            priceList.add(1100L);
         }
 
-        // TODO : 祝日対応
-        // 土日祝の場合
+        // FIXME: 祝日対応
         if (WEEKEND_DAY_OF_WEEK.contains(nowDateTime.getDayOfWeek())) {
-            // レイトショーであるかどうか
-            return (nowDateTime.getHour() < 20) ? 1300 : 1000;
+            if (20 <= nowDateTime.getHour()) {
+                priceList.add(1000L);
+            }
         } else {
-            // 平日の場合(現状値段は同じ)
-            return (nowDateTime.getHour() < 20) ? 1000 : 1000;
+            priceList.add(1000L);
         }
+
+        return priceList.stream().min(Long::compareTo).orElse(1300L);
     }
 }
