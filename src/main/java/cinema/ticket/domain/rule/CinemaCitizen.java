@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 public class CinemaCitizen implements DiscountRule {
 
     public boolean isApplicable(final Visitor visitor) {
-        return (visitor.isKaiin() && !visitor.isSenior());
+        return visitor.isMember() && !visitor.isSenior();
     }
 
     @Override
