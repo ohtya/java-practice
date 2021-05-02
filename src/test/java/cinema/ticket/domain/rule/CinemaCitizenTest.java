@@ -50,24 +50,24 @@ class CinemaCitizenIsApplicableArgumentsProvider implements ArgumentsProvider {
                                 .visitorType(VisitorType.GENERAL)
                                 .isKaiin(true)
                                 .age(59)
-                                .build()
-                        , true),
+                                .build(),
+                        true),
                 // シネマシティズン会員ではない
                 Arguments.of(
                         Visitor.builder()
                                 .visitorType(VisitorType.GENERAL)
                                 .isKaiin(false)
                                 .age(59)
-                                .build()
-                        , false),
+                                .build(),
+                        false),
                 // シネマシティズン会員であるが、シネマシティズンシニア扱いとする
                 Arguments.of(
                         Visitor.builder()
                                 .visitorType(VisitorType.GENERAL)
                                 .isKaiin(true)
                                 .age(60)
-                                .build()
-                        , false)
+                                .build(),
+                        false)
         );
     }
 }
