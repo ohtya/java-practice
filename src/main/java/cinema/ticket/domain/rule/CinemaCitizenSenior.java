@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import static cinema.ticket.model.VisitorType.CINEMA_CITIZEN_SENIOR;
 
 /**
- * シネマシティズン(シニア)料金算出<br>
+ * シネマシティズン(シニア)料金<br>
  * シネマシティズン(シニア)会員の場合に適用する料金ルールです<br>
  * なお、シニアではない場合は {@link CinemaCitizen} を適用します<br>
  */
