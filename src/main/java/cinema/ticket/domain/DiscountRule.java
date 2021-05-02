@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  */
 public interface DiscountRule {
 
-    static final List<DayOfWeek> WEEKEND_DAY_OF_WEEK = Arrays
+    List<DayOfWeek> WEEKEND_DAY_OF_WEEK = Arrays
             .stream(DayOfWeek.values())
             .filter(dayOfWeek -> dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY))
             .collect(Collectors.toList());
@@ -31,5 +31,5 @@ public interface DiscountRule {
      * @param nowDateTime 現在日時
      * @return チケット料金
      */
-    long discountRate(final LocalDateTime nowDateTime,Visitor visitor);
+    long discountRate(final LocalDateTime nowDateTime, final Visitor visitor);
 }
