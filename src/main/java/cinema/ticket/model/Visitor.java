@@ -28,6 +28,16 @@ public class Visitor {
     boolean isKaiin;
 
     /**
+     * シネマシティズン会員か
+     *
+     * @return true: シネマシティズン会員である, false: シネマシティズン会員ではない
+     */
+    public boolean isMember() {
+        // 会員フラグを基に判定します
+        return isKaiin;
+    }
+
+    /**
      * シニアか
      *
      * @return true: シニアである, false: シニアではない
