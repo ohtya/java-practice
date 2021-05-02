@@ -49,7 +49,7 @@ class CinemaCitizenIsApplicableArgumentsProvider implements ArgumentsProvider {
                 Visitor.builder()
                     .visitorType(VisitorType.GENERAL)
                     .isKaiin(true)
-                    .age(70)
+                    .age(59)
                     .build()
                 , true),
             Arguments.of(
@@ -77,7 +77,7 @@ class CinemaCitizenIsApplicableArgumentsProvider implements ArgumentsProvider {
                 Visitor.builder()
                     .visitorType(VisitorType.SENIOR)
                     .isKaiin(true)
-                    .age(70)
+                    .age(59)
                     .build()
                 , true),
             Arguments.of(
