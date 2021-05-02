@@ -44,6 +44,8 @@ public class Visitor {
      */
     public boolean isSenior() {
         // 60歳以上の方をシニアとして扱います
+        // FIXME: シネマシティズンにおけるシニアと通常のシニアで判定基準が異なる
+        // FIXME: 通常のシニアを実装する際に検討する
         return 60 <= age;
     }
 }
