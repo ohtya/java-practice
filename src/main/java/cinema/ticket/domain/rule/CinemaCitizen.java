@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import static cinema.ticket.model.VisitorType.CINEMA_CITIZEN;
 
 /**
- * シネマシティズン料金算出<br>
+ * シネマシティズン料金<br>
  * シネマシティズン会員の場合に適用する料金ルールです<br>
  * なお、シニアの場合は {@link CinemaCitizenSenior} を適用します<br>
  */
