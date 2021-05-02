@@ -43,85 +43,33 @@ class CinemaCitizenIsApplicableArgumentsProvider implements ArgumentsProvider {
 
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-        /* シネマシチズン適応であるかのテスト */
         return Stream.of(
-            Arguments.of(
-                Visitor.builder()
-                    .visitorType(VisitorType.GENERAL)
-                    .isKaiin(true)
-                    .age(59)
-                    .build()
-                , true),
-            Arguments.of(
-                Visitor.builder()
-                    .visitorType(VisitorType.GENERAL)
-                    .isKaiin(true)
-                    .age(20)
-                    .build()
-                , true),
-            Arguments.of(
-                Visitor.builder()
-                    .visitorType(VisitorType.GENERAL)
-                    .isKaiin(false)
-                    .age(70)
-                    .build()
-                , false),
-            Arguments.of(
-                Visitor.builder()
-                    .visitorType(VisitorType.GENERAL)
-                    .isKaiin(false)
-                    .age(20)
-                    .build()
-                , false),
-            Arguments.of(
-                Visitor.builder()
-                    .visitorType(VisitorType.SENIOR)
-                    .isKaiin(true)
-                    .age(59)
-                    .build()
-                , true),
-            Arguments.of(
-                Visitor.builder()
-                    .visitorType(VisitorType.COLLEGE)
-                    .isKaiin(true)
-                    .age(20)
-                    .build()
-                , true),
-            Arguments.of(
-                Visitor.builder()
-                    .visitorType(VisitorType.VOCATIONAL)
-                    .isKaiin(true)
-                    .age(20)
-                    .build()
-                , true),
-            Arguments.of(
-                Visitor.builder()
-                    .visitorType(VisitorType.HIGH_SCHOOL)
-                    .isKaiin(true)
-                    .age(18)
-                    .build()
-                , true),
-            Arguments.of(
-                Visitor.builder()
-                    .visitorType(VisitorType.JUNIOR_HIGH_SCHOOL)
-                    .isKaiin(true)
-                    .age(14)
-                    .build()
-                , true),
-            Arguments.of(
-                Visitor.builder()
-                    .visitorType(VisitorType.PRIMARY_SCHOOL)
-                    .isKaiin(true)
-                    .age(10)
-                    .build()
-                , true),
-            Arguments.of(
-                Visitor.builder()
-                    .visitorType(VisitorType.TODDLER)
-                    .isKaiin(true)
-                    .age(5)
-                    .build()
-                , true)
-            );
+                // シネマシティズン会員である
+                Arguments.of(
+                        Visitor.builder()
+                                .visitorType(VisitorType.GENERAL)
+                                .isKaiin(true)
+                                .age(59)
+                                .build()
+                        , true),
+                // シネマシティズン会員ではない
+                Arguments.of(
+                        Visitor.builder()
+                                .visitorType(VisitorType.GENERAL)
+                                .isKaiin(false)
+                                .age(59)
+                                .build()
+                        , false),
+                // シネマシティズン会員であるが、シネマシティズンシニア扱いとする
+                Arguments.of(
+                        Visitor.builder()
+                                .visitorType(VisitorType.GENERAL)
+                                .isKaiin(true)
+                                .age(60)
+                                .build()
+                        , false)
+        );
+    }
+}
     }
 }
