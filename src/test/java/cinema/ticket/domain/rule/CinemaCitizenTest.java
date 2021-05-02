@@ -15,6 +15,9 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * {@link CinemaCitizen} unit test.
+ */
 class CinemaCitizenTest {
 
     private DiscountRule rule;
