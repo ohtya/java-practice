@@ -28,7 +28,24 @@ public class Visitor {
     boolean isKaiin;
 
     /**
-     * シニアであるか
+     * シネマシティズン会員か
+     *
+     * @return true: シネマシティズン会員である, false: シネマシティズン会員ではない
      */
-    boolean isSenior;
+    public boolean isMember() {
+        // 会員フラグを基に判定します
+        return isKaiin;
+    }
+
+    /**
+     * シニアか
+     *
+     * @return true: シニアである, false: シニアではない
+     */
+    public boolean isSenior() {
+        // 60歳以上の方をシニアとして扱います
+        // FIXME: シネマシティズンにおけるシニアと通常のシニアで判定基準が異なる
+        // FIXME: 通常のシニアを実装する際に検討する
+        return 60 <= age;
+    }
 }
