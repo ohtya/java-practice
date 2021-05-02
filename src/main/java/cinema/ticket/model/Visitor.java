@@ -5,8 +5,8 @@ import lombok.Value;
 
 import static cinema.ticket.model.VisitorType.*;
 
-@Builder
 @Value
+@Builder
 public class Visitor {
     /**
      * 年齢
@@ -14,7 +14,6 @@ public class Visitor {
      * FIXME: 恐らく、ほとんどのサービスが年齢ではなく生年月日を登録して頂いて、そこから計算していると思われる
      */
     int age;
-
 
     /**
      * 学生
