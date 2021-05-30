@@ -18,20 +18,15 @@ public class Senior implements DiscountRule {
         return visitor.getVisitorType() == VisitorType.SENIOR;
     }
 
+    /**
+     * 料金を返却する
+     *
+     * @param nowDateTime 現在日時
+     * @param visitor {@link Visitor}
+     * @return 料金
+     */
     @Override
     public long discountRate(LocalDateTime nowDateTime, Visitor visitor) {
-        // 映画の日
-        if (nowDateTime.getDayOfMonth() == 1) {
-            return 1100;
-        }
-
-        // 休日であるか
-        if (WEEKEND_DAY_OF_WEEK.contains(nowDateTime.getDayOfWeek())) {
-            // レイトショーであるかどうか
-            return (nowDateTime.getHour() < 20) ? 1100 : 1100;
-        } else {
-            // 平日の場合
-            return (nowDateTime.getHour() < 20) ? 1100 : 1100;
-        }
+        return 1100L;
     }
 }
