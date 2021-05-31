@@ -41,7 +41,7 @@ public class SeniorTest {
 
     @ParameterizedTest
     @ArgumentsSource(DiscountRuleArgumentsProvider.class)
-    void disountRule(final LocalDateTime now, final long expected){
+    void discountRate(final LocalDateTime now, final long expected){
         final var visitor = Visitor.builder()
                 .isKaiin(false)
                 .age(70)
@@ -59,7 +59,8 @@ public class SeniorTest {
                     // シニアである
                     Arguments.of(
                         Visitor.builder()
-                            .age(70)
+                            .isKaiin(false)
+                            .age(71)
                             .build(),
                         true),
                     /* シニアでない */

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Senior implements DiscountRule {
     @Override
     public boolean isApplicable(Visitor visitor) {
-        return visitor.getVisitorType() == VisitorType.SENIOR;
+        return visitor.type() == VisitorType.SENIOR;
     }
 
     /**
