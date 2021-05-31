@@ -40,7 +40,7 @@ class PrimaryToddlerTest {
 
     @ParameterizedTest
     @ArgumentsSource(DiscountRuleArgumentsProvider.class)
-    void isApplicable(final LocalDateTime now, final long expected) {
+    void discountRate(final LocalDateTime now, final long expected) {
         final var visitor = Visitor.builder()
                 .isKaiin(false)
                 .age(3)
