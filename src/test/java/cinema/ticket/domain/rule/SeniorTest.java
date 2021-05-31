@@ -60,7 +60,7 @@ public class SeniorTest {
                     Arguments.of(
                         Visitor.builder()
                             .isKaiin(false)
-                            .age(71)
+                            .age(70)
                             .build(),
                         true),
                     /* シニアでない */
