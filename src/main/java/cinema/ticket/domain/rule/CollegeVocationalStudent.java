@@ -46,13 +46,14 @@ public class CollegeVocationalStudent implements DiscountRule {
     public long discountRate(LocalDateTime nowDateTime, Visitor visitor) {
         var priceList = new ArrayList<Long>();
 
-        // 映画の日(1日であるか)
         if (nowDateTime.getDayOfMonth() == 1) {
             priceList.add(1100L);
         }
 
         // FIXME 祝日対応
-        priceList.add((nowDateTime.getHour() < 20) ? 1500L : 1300L);
-        return priceList.stream().min(Long::compareTo).get();
+        if (nowDateTime.getHour() < 20) {
+            priceList.add(1500L);
+        }
+        return priceList.stream().min(Long::compareTo).orElse(1300L);
     }
 }

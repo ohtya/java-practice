@@ -41,7 +41,12 @@ class CollegeVocationalStudentTest {
     @ParameterizedTest
     @ArgumentsSource(DiscountRateArgumentsProvider.class)
     void discountRate(final LocalDateTime now, final long expected){
-
+        final var visitor = Visitor.builder()
+                .isKaiin(false)
+                .age(20)
+                .build();
+        final var actual = rule.discountRate(now,visitor);
+        assertEquals(expected, actual);
     }
 
     private static class ApplicableArgumentsProvider implements ArgumentsProvider {
@@ -59,8 +64,21 @@ class CollegeVocationalStudentTest {
                     Arguments.of(
                             // 大学生である
                             Visitor.builder()
-                                    .isKaiin(true)
+                                    .isKaiin(false)
                                     .age(22)
+                                    .build()
+                            , true),
+                    Arguments.of(
+                            Visitor.builder()
+                                    .isKaiin(false)
+                                    .age(21)
+                                    .build()
+                            , true),
+                    Arguments.of(
+                            // 大学生でも専門学生でもない
+                            Visitor.builder()
+                                    .isKaiin(false)
+                                    .age(19)
                                     .build()
                             , true),
                     Arguments.of(
@@ -70,6 +88,7 @@ class CollegeVocationalStudentTest {
                                     .age(18)
                                     .build()
                             , false),
+
                     Arguments.of(
                             Visitor.builder()
                                     .isKaiin(false)
