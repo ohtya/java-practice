@@ -1,6 +1,7 @@
 package cinema.ticket.domain.rule;
 
 import cinema.ticket.domain.DiscountRule;
+import cinema.ticket.domain.ScreenTime;
 import cinema.ticket.model.Visitor;
 import cinema.ticket.model.VisitorType;
 
@@ -55,5 +56,10 @@ public class CollegeVocationalStudent implements DiscountRule {
             priceList.add(1500L);
         }
         return priceList.stream().min(Long::compareTo).orElse(1300L);
+    }
+
+    @Override
+    public long price(ScreenTime screenTime) {
+        return 0;
     }
 }

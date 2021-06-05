@@ -32,4 +32,13 @@ public interface DiscountRule {
      * @return チケット料金
      */
     long discountRate(final LocalDateTime nowDateTime, final Visitor visitor);
+
+
+    /**
+     * チケット料金を算出します
+     *
+     * @param screenTime {@link ScreenTime}
+     * @return チケット料金
+     */
+    long price(final ScreenTime screenTime);
 }

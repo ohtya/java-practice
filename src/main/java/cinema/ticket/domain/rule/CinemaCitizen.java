@@ -1,6 +1,7 @@
 package cinema.ticket.domain.rule;
 
 import cinema.ticket.domain.DiscountRule;
+import cinema.ticket.domain.ScreenTime;
 import cinema.ticket.model.Visitor;
 
 import java.time.LocalDateTime;
@@ -49,6 +50,25 @@ public class CinemaCitizen implements DiscountRule {
         // FIXME: 祝日対応
         if (WEEKEND_DAY_OF_WEEK.contains(nowDateTime.getDayOfWeek())) {
             if (20 <= nowDateTime.getHour()) {
+                priceList.add(1000L);
+            }
+        } else {
+            priceList.add(1000L);
+        }
+
+        return priceList.stream().min(Long::compareTo).orElse(1300L);
+    }
+
+    @Override
+    public long price(final ScreenTime screenTime) {
+        var priceList = new ArrayList<Long>();
+
+        if (screenTime.isMovieDay()) {
+            priceList.add(1100L);
+        }
+
+        if (screenTime.isHoliday()) {
+            if (screenTime.isLateShow()) {
                 priceList.add(1000L);
             }
         } else {

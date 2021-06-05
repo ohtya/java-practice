@@ -1,5 +1,7 @@
 package cinema.ticket.model;
 
+import cinema.ticket.domain.MyMovieTheaterScreenTime;
+import cinema.ticket.domain.ScreenTime;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
@@ -25,6 +27,13 @@ public class TicketPriceRequest implements PriceRequest {
      */
     @NonNull
     List<Visitor> visitorList;
+
+    @Override
+    public ScreenTime screenTime() {
+        return MyMovieTheaterScreenTime.builder()
+                .screenTime(targetDateTime)
+                .build();
+    }
 
     @Override
     public LocalDateTime targetDateTime() {

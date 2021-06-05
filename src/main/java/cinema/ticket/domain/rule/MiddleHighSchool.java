@@ -1,6 +1,7 @@
 package cinema.ticket.domain.rule;
 
 import cinema.ticket.domain.DiscountRule;
+import cinema.ticket.domain.ScreenTime;
 import cinema.ticket.model.Visitor;
 import cinema.ticket.model.VisitorType;
 
@@ -44,5 +45,10 @@ public class MiddleHighSchool implements DiscountRule {
     @Override
     public long discountRate(LocalDateTime nowDateTime, Visitor visitor) {
         return 1000L;
+    }
+
+    @Override
+    public long price(ScreenTime screenTime) {
+        return 0;
     }
 }
