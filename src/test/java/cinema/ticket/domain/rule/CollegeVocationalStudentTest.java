@@ -40,12 +40,12 @@ class CollegeVocationalStudentTest {
 
     @ParameterizedTest
     @ArgumentsSource(DiscountRateArgumentsProvider.class)
-    void discountRate(final LocalDateTime now, final long expected){
+    void discountRate(final LocalDateTime now, final long expected) {
         final var visitor = Visitor.builder()
                 .isKaiin(false)
                 .age(20)
                 .build();
-        final var actual = rule.discountRate(now,visitor);
+        final var actual = rule.discountRate(now, visitor);
         assertEquals(expected, actual);
     }
 
@@ -54,15 +54,21 @@ class CollegeVocationalStudentTest {
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
             /* 専門・大学生が適応であるかのテスト */
             return Stream.of(
+                    // 専門学生である
                     Arguments.of(
-                            // 専門学生である
+                            Visitor.builder()
+                                    .isKaiin(false)
+                                    .age(19)
+                                    .build()
+                            , true),
+                    Arguments.of(
                             Visitor.builder()
                                     .isKaiin(false)
                                     .age(20)
                                     .build()
                             , true),
+                    // 大学生である
                     Arguments.of(
-                            // 大学生である
                             Visitor.builder()
                                     .isKaiin(false)
                                     .age(22)
@@ -74,21 +80,13 @@ class CollegeVocationalStudentTest {
                                     .age(21)
                                     .build()
                             , true),
+                    // 大学生でも専門学生でもない
                     Arguments.of(
-                            // 大学生でも専門学生でもない
-                            Visitor.builder()
-                                    .isKaiin(false)
-                                    .age(19)
-                                    .build()
-                            , true),
-                    Arguments.of(
-                            // 大学生でも専門学生でもない
                             Visitor.builder()
                                     .isKaiin(true)
                                     .age(18)
                                     .build()
                             , false),
-
                     Arguments.of(
                             Visitor.builder()
                                     .isKaiin(false)
@@ -106,37 +104,37 @@ class CollegeVocationalStudentTest {
             return Stream.of(
                     Arguments.of(
                             // 平日20時まで
-                            LocalDateTime.of(2021,05,28,19,59),
+                            LocalDateTime.of(2021, 05, 28, 19, 59),
                             1500
                     ),
                     Arguments.of(
                             // 平日20時以降
-                            LocalDateTime.of(2021,05,28,20,00),
+                            LocalDateTime.of(2021, 05, 28, 20, 00),
                             1300
                     ),
                     Arguments.of(
                             // 土曜20時まで
-                            LocalDateTime.of(2021,05,29,19,59),
+                            LocalDateTime.of(2021, 05, 29, 19, 59),
                             1500
                     ),
                     Arguments.of(
                             // 土曜20時以降
-                            LocalDateTime.of(2021,05,29,20,00),
+                            LocalDateTime.of(2021, 05, 29, 20, 00),
                             1300
                     ),
                     Arguments.of(
                             // 日曜20時まで
-                            LocalDateTime.of(2021,05,30,19,59),
+                            LocalDateTime.of(2021, 05, 30, 19, 59),
                             1500
                     ),
                     Arguments.of(
                             // 日曜20時以降
-                            LocalDateTime.of(2021,05,30,20,00),
+                            LocalDateTime.of(2021, 05, 30, 20, 00),
                             1300
                     ),
                     Arguments.of(
                             // 映画の日
-                            LocalDateTime.of(2021,05,01,20,00),
+                            LocalDateTime.of(2021, 05, 01, 20, 00),
                             1100
                     )
             );
