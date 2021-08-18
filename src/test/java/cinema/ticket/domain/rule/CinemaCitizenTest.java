@@ -1,6 +1,7 @@
 package cinema.ticket.domain.rule;
 
 import cinema.ticket.domain.DiscountRule;
+import cinema.ticket.domain.MyMovieTheaterScreenTime;
 import cinema.ticket.model.Visitor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,24 +33,23 @@ class CinemaCitizenTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(CinemaCitizenIsApplicableArgumentsProvider.class)
+    @ArgumentsSource(IsApplicableArgumentsProvider.class)
     void isApplicable(final Visitor visitor, final boolean expected) {
         final var actual = rule.isApplicable(visitor);
         assertEquals(expected, actual);
     }
 
     @ParameterizedTest
-    @ArgumentsSource(CinemaCitizenDiscountRateArgumentsProvider.class)
-    void discountRate(final LocalDateTime now, final long expected) {
-        final var visitor = Visitor.builder()
-                .isKaiin(true)
-                .age(59)
+    @ArgumentsSource(PriceArgumentsProvider.class)
+    void price(final LocalDateTime now, final long expected) {
+        final var screenTime = MyMovieTheaterScreenTime.builder()
+                .screenTime(now)
                 .build();
-        final var actual = rule.discountRate(now, visitor);
+        final var actual = rule.price(screenTime);
         assertEquals(expected, actual);
     }
 
-    static class CinemaCitizenIsApplicableArgumentsProvider implements ArgumentsProvider {
+    private static class IsApplicableArgumentsProvider implements ArgumentsProvider {
 
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
@@ -79,7 +79,7 @@ class CinemaCitizenTest {
         }
     }
 
-    static class CinemaCitizenDiscountRateArgumentsProvider implements ArgumentsProvider {
+    private static class PriceArgumentsProvider implements ArgumentsProvider {
 
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {

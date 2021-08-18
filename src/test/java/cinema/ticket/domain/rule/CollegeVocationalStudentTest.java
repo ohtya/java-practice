@@ -1,6 +1,7 @@
 package cinema.ticket.domain.rule;
 
 import cinema.ticket.domain.DiscountRule;
+import cinema.ticket.domain.MyMovieTheaterScreenTime;
 import cinema.ticket.model.Visitor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * {@link CollegeVocationalStudent} unit test.
- * 専門・大学生のテスト
  */
 class CollegeVocationalStudentTest {
+
     private DiscountRule rule;
 
     @BeforeEach
@@ -32,111 +33,122 @@ class CollegeVocationalStudentTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(ApplicableArgumentsProvider.class)
+    @ArgumentsSource(IsApplicableArgumentsProvider.class)
     void isApplicable(final Visitor visitor, final boolean expected) {
         final var actual = rule.isApplicable(visitor);
         assertEquals(expected, actual);
     }
 
     @ParameterizedTest
-    @ArgumentsSource(DiscountRateArgumentsProvider.class)
-    void discountRate(final LocalDateTime now, final long expected) {
-        final var visitor = Visitor.builder()
-                .isKaiin(false)
-                .age(20)
+    @ArgumentsSource(PriceArgumentsProvider.class)
+    void price(final LocalDateTime now, final long expected) {
+        final var screenTime = MyMovieTheaterScreenTime.builder()
+                .screenTime(now)
                 .build();
-        final var actual = rule.discountRate(now, visitor);
+        final var actual = rule.price(screenTime);
         assertEquals(expected, actual);
     }
 
-    private static class ApplicableArgumentsProvider implements ArgumentsProvider {
+    private static class IsApplicableArgumentsProvider implements ArgumentsProvider {
+
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-            /* 専門・大学生が適応であるかのテスト */
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    // 専門学生である
+                    // 専門学校生である
                     Arguments.of(
                             Visitor.builder()
                                     .isKaiin(false)
                                     .age(19)
-                                    .build()
-                            , true),
+                                    .build(),
+                            true),
                     Arguments.of(
                             Visitor.builder()
                                     .isKaiin(false)
                                     .age(20)
-                                    .build()
-                            , true),
+                                    .build(),
+                            true),
                     // 大学生である
                     Arguments.of(
                             Visitor.builder()
                                     .isKaiin(false)
-                                    .age(22)
-                                    .build()
-                            , true),
+                                    .age(21)
+                                    .build(),
+                            true),
                     Arguments.of(
                             Visitor.builder()
                                     .isKaiin(false)
-                                    .age(21)
-                                    .build()
-                            , true),
-                    // 大学生でも専門学生でもない
+                                    .age(22)
+                                    .build(),
+                            true),
+                    // 専門学校生でも大学生でもない
+                    Arguments.of(
+                            Visitor.builder()
+                                    .isKaiin(false)
+                                    .age(18)
+                                    .build(),
+                            false),
+                    Arguments.of(
+                            Visitor.builder()
+                                    .isKaiin(false)
+                                    .age(70)
+                                    .build(),
+                            false),
+                    // 専門学校生だがシネマシティズン会員である
                     Arguments.of(
                             Visitor.builder()
                                     .isKaiin(true)
-                                    .age(18)
-                                    .build()
-                            , false),
-                    Arguments.of(
-                            Visitor.builder()
-                                    .isKaiin(false)
-                                    .age(23)
-                                    .build()
-                            , false)
+                                    .age(20)
+                                    .build(),
+                            false)
             );
         }
     }
 
-    private static class DiscountRateArgumentsProvider implements ArgumentsProvider {
+    private static class PriceArgumentsProvider implements ArgumentsProvider {
 
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
+                    // 平日 20:00 まで
                     Arguments.of(
-                            // 平日20時まで
-                            LocalDateTime.of(2021, 05, 28, 19, 59),
-                            1500
-                    ),
+                            LocalDateTime.of(2021, 4, 26, 19, 59),
+                            1500),
+                    // 平日 20:00 以降
                     Arguments.of(
-                            // 平日20時以降
-                            LocalDateTime.of(2021, 05, 28, 20, 00),
-                            1300
-                    ),
+                            LocalDateTime.of(2021, 4, 26, 20, 0),
+                            1300),
+                    // 土 20:00 まで
                     Arguments.of(
-                            // 土曜20時まで
-                            LocalDateTime.of(2021, 05, 29, 19, 59),
-                            1500
-                    ),
+                            LocalDateTime.of(2021, 4, 24, 19, 59),
+                            1500),
+                    // 土 20:00 以降
                     Arguments.of(
-                            // 土曜20時以降
-                            LocalDateTime.of(2021, 05, 29, 20, 00),
-                            1300
-                    ),
+                            LocalDateTime.of(2021, 4, 24, 20, 0),
+                            1300),
+                    // 日 20:00 まで
                     Arguments.of(
-                            // 日曜20時まで
-                            LocalDateTime.of(2021, 05, 30, 19, 59),
-                            1500
-                    ),
+                            LocalDateTime.of(2021, 5, 2, 19, 59),
+                            1500),
+                    // 日 20:00 以降
                     Arguments.of(
-                            // 日曜20時以降
-                            LocalDateTime.of(2021, 05, 30, 20, 00),
-                            1300
-                    ),
+                            LocalDateTime.of(2021, 5, 2, 20, 0),
+                            1300),
+// FIXME: 祝日は未実装のため、一旦テストをコメントアウトします
+//                // 祝日 20:00 まで
+//                Arguments.of(
+//                        LocalDateTime.of(2021, 5, 3, 19, 59),
+//                        1500),
+//                // 祝日 20:00 以降
+//                Arguments.of(
+//                        LocalDateTime.of(2021, 5, 3, 20, 0),
+//                        1300),
+                    // 映画の日(毎月1日)
                     Arguments.of(
-                            // 映画の日
-                            LocalDateTime.of(2021, 05, 01, 20, 00),
-                            1100
-                    )
+                            LocalDateTime.of(2021, 5, 1, 0, 0),
+                            1100),
+                    Arguments.of(
+                            LocalDateTime.of(2021, 5, 1, 19, 59),
+                            1100)
             );
         }
     }

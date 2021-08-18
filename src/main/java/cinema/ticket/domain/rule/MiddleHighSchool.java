@@ -1,10 +1,10 @@
 package cinema.ticket.domain.rule;
 
 import cinema.ticket.domain.DiscountRule;
+import cinema.ticket.domain.ScreenTime;
 import cinema.ticket.model.Visitor;
 import cinema.ticket.model.VisitorType;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static cinema.ticket.model.VisitorType.HIGH_SCHOOL;
@@ -37,12 +37,11 @@ public class MiddleHighSchool implements DiscountRule {
      * 映画の日(毎月1日)<br>
      * 時間帯によらず 1,000 円<br>
      *
-     * @param nowDateTime 現在日時
-     * @param visitor     {@link Visitor}
+     * @param screenTime {@link ScreenTime}
      * @return 料金
      */
     @Override
-    public long discountRate(LocalDateTime nowDateTime, Visitor visitor) {
+    public long price(ScreenTime screenTime) {
         return 1000L;
     }
 }

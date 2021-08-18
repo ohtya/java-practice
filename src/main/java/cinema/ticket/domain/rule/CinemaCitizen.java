@@ -1,15 +1,15 @@
 package cinema.ticket.domain.rule;
 
 import cinema.ticket.domain.DiscountRule;
+import cinema.ticket.domain.ScreenTime;
 import cinema.ticket.model.Visitor;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static cinema.ticket.model.VisitorType.CINEMA_CITIZEN;
 
 /**
- * シネマシティズン料金算出<br>
+ * シネマシティズン料金<br>
  * シネマシティズン会員の場合に適用する料金ルールです<br>
  * なお、シニアの場合は {@link CinemaCitizenSenior} を適用します<br>
  */
@@ -34,24 +34,22 @@ public class CinemaCitizen implements DiscountRule {
      * 映画の日(毎月1日)<br>
      * 時間帯によらず 1,100 円<br>
      *
-     * @param nowDateTime 現在日時
-     * @param visitor     {@link Visitor}
+     * @param screenTime {@link ScreenTime}
      * @return 料金
      */
     @Override
-    public long discountRate(final LocalDateTime nowDateTime, final Visitor visitor) {
+    public long price(final ScreenTime screenTime) {
         var priceList = new ArrayList<Long>();
 
-        if (nowDateTime.getDayOfMonth() == 1) {
+        if (screenTime.isMovieDay()) {
             priceList.add(1100L);
         }
 
-        // FIXME: 祝日対応
-        if (WEEKEND_DAY_OF_WEEK.contains(nowDateTime.getDayOfWeek())) {
-            if (20 <= nowDateTime.getHour()) {
-                priceList.add(1000L);
-            }
-        } else {
+        if (!screenTime.isHoliday()) {
+            priceList.add(1000L);
+        }
+
+        if (screenTime.isHoliday() && screenTime.isLateShow()) {
             priceList.add(1000L);
         }
 

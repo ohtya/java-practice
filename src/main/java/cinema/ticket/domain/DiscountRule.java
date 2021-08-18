@@ -3,7 +3,6 @@ package cinema.ticket.domain;
 import cinema.ticket.model.Visitor;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,8 +27,8 @@ public interface DiscountRule {
     /**
      * チケット料金を算出します
      *
-     * @param nowDateTime 現在日時
+     * @param screenTime {@link ScreenTime}
      * @return チケット料金
      */
-    long discountRate(final LocalDateTime nowDateTime, final Visitor visitor);
+    long price(final ScreenTime screenTime);
 }

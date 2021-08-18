@@ -5,8 +5,8 @@ import lombok.Value;
 
 import static cinema.ticket.model.VisitorType.*;
 
-@Builder
 @Value
+@Builder
 public class Visitor {
     /**
      * 年齢
@@ -15,12 +15,12 @@ public class Visitor {
      */
     int age;
 
-
     /**
      * 学生
      *
      * @deprecated 削除したいため利用しないでください
      */
+    @Deprecated
     VisitorType visitorType;
 
     /**

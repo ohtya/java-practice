@@ -1,6 +1,7 @@
 package cinema.ticket.domain.rule;
 
 import cinema.ticket.domain.DiscountRule;
+import cinema.ticket.domain.MyMovieTheaterScreenTime;
 import cinema.ticket.model.Visitor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,15 +41,13 @@ public class SeniorTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(DiscountRuleArgumentsProvider.class)
-    void discountRate(final LocalDateTime now, final long expected){
-        final var visitor = Visitor.builder()
-                .isKaiin(false)
-                .age(70)
+    @ArgumentsSource(PriceArgumentsProvider.class)
+    void price(final LocalDateTime now, final long expected) {
+        final var screenTime = MyMovieTheaterScreenTime.builder()
+                .screenTime(now)
                 .build();
-        final var actual = rule.discountRate(now, visitor);
+        final var actual = rule.price(screenTime);
         assertEquals(expected, actual);
-
     }
 
     private static class IsApplicableArgumentsProvider implements ArgumentsProvider {
@@ -58,40 +57,40 @@ public class SeniorTest {
             return Stream.of(
                     // シニアである
                     Arguments.of(
-                        Visitor.builder()
-                            .isKaiin(false)
-                            .age(70)
-                            .build(),
-                        true),
+                            Visitor.builder()
+                                    .isKaiin(false)
+                                    .age(70)
+                                    .build(),
+                            true),
                     /* シニアでない */
                     // シネマシティズンシニアとなるケース
                     Arguments.of(
-                        Visitor.builder()
-                            .age(70)
-                            .isKaiin(true)
-                            .build(),
-                        false
+                            Visitor.builder()
+                                    .age(70)
+                                    .isKaiin(true)
+                                    .build(),
+                            false
                     ),
                     // 単純にシニアの年齢対象ではない
                     Arguments.of(
-                        Visitor.builder()
-                            .age(69)
-                            .isKaiin(false)
-                            .build(),
-                        false
+                            Visitor.builder()
+                                    .age(69)
+                                    .isKaiin(false)
+                                    .build(),
+                            false
                     ),
                     Arguments.of(
-                        Visitor.builder()
-                            .age(19)
-                            .isKaiin(false)
-                            .build(),
-                        false
+                            Visitor.builder()
+                                    .age(19)
+                                    .isKaiin(false)
+                                    .build(),
+                            false
                     )
             );
         }
     }
 
-    private static class DiscountRuleArgumentsProvider implements ArgumentsProvider {
+    private static class PriceArgumentsProvider implements ArgumentsProvider {
 
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
