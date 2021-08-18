@@ -1,6 +1,7 @@
 package cinema.ticket.domain.rule;
 
 import cinema.ticket.domain.DiscountRule;
+import cinema.ticket.domain.ScreenTime;
 import cinema.ticket.model.Visitor;
 
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class Baby implements DiscountRule {
     }
 
     @Override
-    public long discountRate(final LocalDateTime nowDateTime, final Visitor visitor) {
+    public long price(ScreenTime screenTime) {
         return 0L;
     }
 }

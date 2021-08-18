@@ -5,7 +5,6 @@ import cinema.ticket.domain.ScreenTime;
 import cinema.ticket.model.Visitor;
 import cinema.ticket.model.VisitorType;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +17,11 @@ import static cinema.ticket.model.VisitorType.VOCATIONAL;
 public class CollegeVocationalStudent implements DiscountRule {
 
     // 大・専門学生の配列
-    protected static final List<VisitorType> TARGET_VISITOR_TYPE = List.of(COLLEGE, VOCATIONAL);
+    private static final List<VisitorType> TARGET_VISITOR_TYPE = List.of(COLLEGE, VOCATIONAL);
 
     @Override
     public boolean isApplicable(Visitor visitor) {
-        return (TARGET_VISITOR_TYPE.contains(visitor.type()));
+        return TARGET_VISITOR_TYPE.contains(visitor.type());
     }
 
     /**
@@ -39,27 +38,21 @@ public class CollegeVocationalStudent implements DiscountRule {
      * 映画の日(毎月1日)<br>
      * 時間帯によらず 1,100 円<br>
      *
-     * @param nowDateTime 現在日時
-     * @param visitor     {@link Visitor}
+     * @param screenTime {@link ScreenTime}
      * @return 料金
      */
     @Override
-    public long discountRate(LocalDateTime nowDateTime, Visitor visitor) {
+    public long price(ScreenTime screenTime) {
         var priceList = new ArrayList<Long>();
 
-        if (nowDateTime.getDayOfMonth() == 1) {
+        if (screenTime.isMovieDay()) {
             priceList.add(1100L);
         }
 
-        // FIXME 祝日対応
-        if (nowDateTime.getHour() < 20) {
-            priceList.add(1500L);
+        if (screenTime.isLateShow()) {
+            priceList.add(1300L);
         }
-        return priceList.stream().min(Long::compareTo).orElse(1300L);
-    }
 
-    @Override
-    public long price(ScreenTime screenTime) {
-        return 0;
+        return priceList.stream().min(Long::compareTo).orElse(1500L);
     }
 }

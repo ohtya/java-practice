@@ -4,8 +4,6 @@ import cinema.ticket.domain.DiscountRule;
 import cinema.ticket.domain.ScreenTime;
 import cinema.ticket.model.Visitor;
 
-import java.time.LocalDateTime;
-
 import static cinema.ticket.model.VisitorType.CINEMA_CITIZEN_SENIOR;
 
 /**
@@ -34,17 +32,11 @@ public class CinemaCitizenSenior implements DiscountRule {
      * 映画の日(毎月1日)<br>
      * 時間帯によらず 1,000 円<br>
      *
-     * @param nowDateTime 現在日時
-     * @param visitor     {@link Visitor}
+     * @param screenTime {@link ScreenTime}
      * @return 料金
      */
     @Override
-    public long discountRate(final LocalDateTime nowDateTime, final Visitor visitor) {
-        return 1000L;
-    }
-
-    @Override
     public long price(ScreenTime screenTime) {
-        return 0;
+        return 1000L;
     }
 }

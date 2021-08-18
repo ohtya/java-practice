@@ -20,6 +20,7 @@ public class Visitor {
      *
      * @deprecated 削除したいため利用しないでください
      */
+    @Deprecated
     VisitorType visitorType;
 
     /**
