@@ -4,22 +4,21 @@ package cinema.ticket.domain.rule;
 import cinema.ticket.domain.DiscountRule;
 import cinema.ticket.domain.MyMovieTheaterScreenTime;
 import cinema.ticket.model.Visitor;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.ArgumentsProvider;
-import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
 /**
  * {@link Baby} unit test.
  */
+@DisplayName("Baby unit test.")
 class BabyTest {
 
     private DiscountRule rule;
@@ -33,28 +32,20 @@ class BabyTest {
     void tearDown() {
     }
 
-    @ParameterizedTest
-    @ArgumentsSource(IsApplicableArgumentsProvider.class)
-    void isApplicable(final Visitor visitor, final boolean expected) {
-        final var actual = rule.isApplicable(visitor);
-        assertEquals(expected, actual);
-    }
+    // Java 11 の場合は非 static なクラス内に static なクラスやメソッドを定義できないため TestInstance アノテーションを付与します
+    @Nested
+    @TestInstance(PER_CLASS)
+    @DisplayName("お客様に割引を適用可能か")
+    class TestOfIsApplicable {
 
-    @ParameterizedTest
-    @ArgumentsSource(PriceArgumentsProvider.class)
-    void price(final LocalDateTime now, final long expected) {
-        final var screenTime = MyMovieTheaterScreenTime.builder()
-                .screenTime(now)
-                .build();
-        final var actual = rule.price(screenTime);
-        assertEquals(expected, actual);
-    }
+        @ParameterizedTest
+        @MethodSource("visitorProvider")
+        void isApplicable(final Visitor visitor, final boolean expected) {
+            final var actual = rule.isApplicable(visitor);
+            assertEquals(expected, actual);
+        }
 
-    private static class IsApplicableArgumentsProvider implements ArgumentsProvider {
-
-        @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
-
+        Stream<Arguments> visitorProvider() {
             return Stream.of(
                     // 乳児である
                     Arguments.of(
@@ -77,10 +68,23 @@ class BabyTest {
         }
     }
 
-    private static class PriceArgumentsProvider implements ArgumentsProvider {
+    // Java 11 の場合は非 static なクラス内に static なクラスやメソッドを定義できないため TestInstance アノテーションを付与します
+    @Nested
+    @TestInstance(PER_CLASS)
+    @DisplayName("値段を返す")
+    class TestOfPrice {
 
-        @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+        @ParameterizedTest
+        @MethodSource("nowProvider")
+        void price(final LocalDateTime now, final long expected) {
+            final var screenTime = MyMovieTheaterScreenTime.builder()
+                    .screenTime(now)
+                    .build();
+            final var actual = rule.price(screenTime);
+            assertEquals(expected, actual);
+        }
+
+        Stream<Arguments> nowProvider() {
             return Stream.of(
                     // 平日 20:00 まで
                     Arguments.of(
