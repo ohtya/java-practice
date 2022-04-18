@@ -89,7 +89,7 @@ public class Visitor {
     /**
      * シネマシティズン会員か
      *
-     * @return true: シネマシティズン会員である, false: シネマシティズン会員ではない
+     * @return {@code true} : シネマシティズン会員である, {@code false} : シネマシティズン会員ではない
      */
     public boolean isMember() {
         // 会員フラグを基に判定します
