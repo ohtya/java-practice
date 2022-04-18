@@ -16,14 +16,6 @@ public class Visitor {
     int age;
 
     /**
-     * 学生
-     *
-     * @deprecated 削除したいため利用しないでください
-     */
-    @Deprecated
-    VisitorType visitorType;
-
-    /**
      * {@link VisitorType} を返します
      *
      * @return {@link VisitorType}
