@@ -5,6 +5,9 @@ import lombok.Value;
 
 import static cinema.ticket.model.VisitorType.*;
 
+/**
+ * 映画館を訪れたお客様を表すクラス
+ */
 @Value
 @Builder
 public class Visitor {
